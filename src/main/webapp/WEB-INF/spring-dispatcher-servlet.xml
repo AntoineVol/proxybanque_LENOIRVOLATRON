@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
@@ -13,7 +14,8 @@
         http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
 	<mvc:annotation-driven />
-	<context:component-scan base-package="domain, web" />
+	<context:component-scan
+		base-package="domain, web" />
 	<jpa:repositories base-package="dao" />
 
 	<!-- List of Beans -->
@@ -22,7 +24,8 @@
 	<bean id="chequeBookService" class="business.ChequeBookBusiness" />
 	<bean id="addressService" class="business.AddressBusiness" />
 	<bean id="bankCardService" class="business.BankCardBusiness" />
-	<bean id="currentAccountService" class="business.CurrentAccountBusiness" />
+	<bean id="currentAccountService"
+		class="business.CurrentAccountBusiness" />
 
 	<!-- Parametrage springframework -->
 	<bean id="viewResolver"
@@ -36,7 +39,14 @@
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="persistenceUnitName" value="proxybanque" />
 	</bean>
-	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	<bean id="transactionManager"
+		class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory"
+			ref="entityManagerFactory" />
 	</bean>
+
+	<bean id="researchComponent"
+		class="business.ResearchComponent"
+		scope="prototype" />
+
 </beans>

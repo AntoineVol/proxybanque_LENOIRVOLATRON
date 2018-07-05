@@ -2,7 +2,6 @@ package business;
 
 import java.util.List;
 
-import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import dao.ClientRepository;
@@ -16,7 +15,6 @@ public class ResearchComponent {
 	@Autowired
 	ClientRepository repo;
 
-	private static final long serialVersionUID = 1L;
 	private List<Client> listClient;
 	private Integer id;
 	private static Integer count=0;
@@ -42,11 +40,7 @@ public class ResearchComponent {
 		this.id=++count;
 	}
 
-	ObjectFactory<ResearchComponent> clientObjectFactory;
-	private ClientRepository getRepo() {
-		return (ClientRepository) this.repo;
-	}
-	
+
 	public List<Client> searchMethod(String FirstName, String LastName){
 		this.listClient = this.repo.findAllByFirstNameAndLastName(FirstName, LastName);
 		return this.listClient;

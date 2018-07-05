@@ -24,11 +24,11 @@ public class webController {
 	/**
 	 * Url de la jsp d'acceuil
 	 */
-	final String URL_HOME = "redirect:/home.html";
+	final String URL_HOME = "redirect:/Home.html";
 	/**
 	 * Url de la jsp de contrôle de date de naissance
 	 */
-	final String URL_BIRTHDAY = "redirect:/home/date.html?id=";
+	final String URL_BIRTHDAY = "redirect:/Home/Date.html?id=";
 	/**
 	 * Url de la jsp affichant les comptes du client
 	 */
@@ -43,14 +43,14 @@ public class webController {
 	 * @return Le Model and View de la JSP Home.jsp
 	 */
 
-	@GetMapping({ "/Home", "/" })
+	@GetMapping({ "/Home", "/index" })
 	public ModelAndView accessHome() {
 		ModelAndView mav = new ModelAndView("Home");
 		mav.addObject("clientIdentification", new Client());
 		return mav;
 	}
 
-	@PostMapping("/Home")
+	@PostMapping({ "/Home", "/index" })
 	public String searchClientName(@ModelAttribute Client clientIdentidfication) {
 		ResearchComponent researchComponent = this.clientBusiness.findAllByFirstNameAndLastName(
 				clientIdentidfication.getFirstName(), clientIdentidfication.getLastName());
@@ -61,7 +61,7 @@ public class webController {
 		}
 	}
 
-	@GetMapping("Date")
+	@GetMapping("/Home/Date")
 	public ModelAndView accessDate() {
 		ModelAndView mav = new ModelAndView("Date");
 		mav.addObject("clientDate", new Client());
