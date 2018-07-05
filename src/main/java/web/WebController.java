@@ -28,7 +28,7 @@ import domain.TypeBankAccount;
  *
  */
 @Controller
-public class webController {
+public class WebController {
 
 	/**
 	 * Url de la jsp d'acceuil
