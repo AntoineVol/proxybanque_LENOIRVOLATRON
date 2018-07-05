@@ -1,9 +1,10 @@
 <%@ include file="header.jsp"%>
 <body>
+	<c:url value="/Home/Date/${idResearchComponent}.html" var="postDateUrl" />
 	<div id=margeHaute></div>
 	<div
 		class="container-fluid d-flex justify-content-center align-items-center">
-		<form:form modelAttribute="clientDate" method="post">
+		<form:form modelAttribute="clientDate" method="post" action=postDateUrl>
 			<legend>Renseigner votre date de naissance</legend>
 			<div class="form-group">
 				<form:input type="date" class="form-control" path="birthday"
