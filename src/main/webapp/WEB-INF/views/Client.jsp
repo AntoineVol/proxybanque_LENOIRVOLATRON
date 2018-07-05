@@ -1,11 +1,10 @@
 <%@ include file="header.jsp"%>
 <body>
-
 	<div id=margeHaute></div>
 	
 	<!-- Liste d'URL -->
-	<c:url value="/Retrait.html?idcompte=" var="retraitUrl" />
-	<c:url value="/Virement.html?idcompte=" var="virementsUrl" />
+	<c:url value="/Retrait.html?idCompte=" var="retraitUrl" />
+	<c:url value="/Virement.html?idCompte=" var="virementsUrl" />
 	
 	<div class="container-fluid d-flex justify-content-center align-items-center">
 		<h5>Comptes du Client </h5>
@@ -19,7 +18,7 @@
 					<th>Solde du Compte</th>
 					<th></th>
 					<th></th>
-					<th></th>
+
 				</tr>
 			</thead>
 			<tbody>

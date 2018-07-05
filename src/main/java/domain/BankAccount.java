@@ -9,7 +9,7 @@ public abstract class BankAccount implements Entity, Serializable{
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private TypeBankAccount typeBankAccount;
-	private Integer numAccount;
+	private Long numAccount;
 	private LocalDate creationDate;
 	private Double balance;
 	private ChequeBook checkBook;
@@ -21,10 +21,10 @@ public abstract class BankAccount implements Entity, Serializable{
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Integer getNumAccount() {
+	public Long getNumAccount() {
 		return numAccount;
 	}
-	public void setNumAccount(Integer numAccount) {
+	public void setNumAccount(Long numAccount) {
 		this.numAccount = numAccount;
 	}
 	public LocalDate getCreationDate() {

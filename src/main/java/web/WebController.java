@@ -79,6 +79,7 @@ public class WebController {
 
 	@PostMapping({ "/Home{idSearch}", "/index" })
 	public String searchClient(@ModelAttribute Client clientIdentification) {
+			
 			Integer path;
 			ResearchComponent researchComponent = this.clientBusiness.findAllByFirstNameAndLastName(
 					clientIdentification.getFirstName(), clientIdentification.getLastName());
@@ -105,21 +106,22 @@ public class WebController {
 
 	}
 	
-	@PostMapping("/Home/Date")
-	public String accessAccount(){
-		
-		return URL_CLIENT + 3;
-	}
 	
 	@GetMapping("/Client")
 	public ModelAndView listCompte(@RequestParam Integer idClient){
 		List<BankAccount> listCompte = new ArrayList<BankAccount>();
-		//LOGGER.debug("Je suis làààààààààààààààààà");
 		ModelAndView mav = new ModelAndView("Client");
 		Client client = this.clientBusiness.findById(idClient);
 		listCompte = this.bankAccountBusiness.getAllByClient(client);
 		mav.addObject("listCompte", listCompte);
 		return mav;
-
+	}
+	
+	@GetMapping("/Retrait")
+	public ModelAndView retrait(@RequestParam Integer idCompte ){
+		ModelAndView mav = new ModelAndView("Retrait");
+		BankAccount account = this.bankAccountBusiness.findById(idCompte);
+		mav.addObject("compte", account);
+		return mav;
 	}
 }
