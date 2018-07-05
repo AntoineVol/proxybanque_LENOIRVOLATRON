@@ -70,10 +70,6 @@ public class WebController {
 
 	@GetMapping({"/Home{idSearch}","/index{idSearch}"})
 	public ModelAndView accessHome(@PathVariable Integer idSearch) {
-		CurrentAccount compte = new  CurrentAccount();
-		compte.setBalance(500.00);
-		compte.setTypeBankAccount(TypeBankAccount.CURRENT_ACCOUNT);
-		this.currentAccountBusiness.create(compte);
 		ModelAndView mav = new ModelAndView("Home");
 		mav.addObject("idSearch", idSearch);
 		mav.addObject("clientDate", new Client());
