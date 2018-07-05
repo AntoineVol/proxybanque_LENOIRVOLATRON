@@ -1,6 +1,6 @@
 <%@ include file="header.jsp"%>
 <body>
-	<c:url></c:url>
+
 	<div id=margeHaute></div>
 	
 	<!-- Liste d'URL -->
@@ -23,7 +23,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="client" items="${listCompte}">
+				<c:forEach var="bankAccount" items="${listCompte}">
 					<tr>
 						<td>${bankAccount.id}</td>
 						<td>${bankAccount.numAccount}</td>
@@ -38,7 +38,6 @@
 				</c:forEach>
 			</tbody>
 		</table>
-		<div class="dropdown-menu"></div>
 		<div id=margeHaute></div>
 	</div>
 	<%@ include file="footer.jsp"%>

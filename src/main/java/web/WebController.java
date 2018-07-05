@@ -1,12 +1,12 @@
 package web;
 
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.time.LocalDate;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -22,9 +22,9 @@ import business.ClientBusiness;
 import business.CurrentAccountBusiness;
 import business.ResearchComponent;
 import business.SavingAccountBusiness;
+import domain.BankAccount;
 import domain.Client;
 import domain.CurrentAccount;
-import domain.TypeBankAccount;
 
 /**
  * Controller de l'application. Il permet la direction et la gestion des
@@ -113,10 +113,12 @@ public class WebController {
 	
 	@GetMapping("/Client")
 	public ModelAndView listCompte(@RequestParam Integer idClient){
+		List<BankAccount> listCompte = new ArrayList<BankAccount>();
 		//LOGGER.debug("Je suis làààààààààààààààààà");
 		ModelAndView mav = new ModelAndView("Client");
 		Client client = this.clientBusiness.findById(idClient);
-		mav.addObject("listCompte", this.bankAccountBusiness.getAllByClient(client));
+		listCompte = this.bankAccountBusiness.getAllByClient(client);
+		mav.addObject("listCompte", listCompte);
 		return mav;
 
 	}
