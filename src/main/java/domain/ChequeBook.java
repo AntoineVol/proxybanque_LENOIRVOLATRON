@@ -1,8 +1,12 @@
 package domain;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class ChequeBook {
+public class ChequeBook implements Entity, Serializable{
+
+
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private LocalDate sendDate;
 	private LocalDate receptionDate;

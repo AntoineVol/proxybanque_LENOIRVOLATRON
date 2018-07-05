@@ -1,6 +1,12 @@
 package domain;
 
-public class CurrentAccount extends BankAccount{
+import java.io.Serializable;
+
+public class CurrentAccount extends BankAccount implements Entity, Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private BankCard bankCard;
 	
 	//GETTER & SETTER

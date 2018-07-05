@@ -13,7 +13,7 @@ import domain.Entity;
  * @author Fabien LENOIR & Antoine VOLATRON
  *
  */
-public class CrudBusiness<ENTITY extends Entity>{
+public abstract class CrudBusiness<ENTITY extends Entity>{
 	
 	@Autowired
 	JpaRepository<ENTITY, Integer> repo;

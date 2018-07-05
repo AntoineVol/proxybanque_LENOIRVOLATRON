@@ -1,10 +1,15 @@
 package domain;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-public class Client {
+public class Client implements Entity, Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private Integer clientAccount;
 	private String firstName;

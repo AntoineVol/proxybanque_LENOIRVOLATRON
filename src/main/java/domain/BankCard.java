@@ -1,8 +1,13 @@
 package domain;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public abstract class BankCard {
+public abstract class BankCard implements Entity, Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private Integer numBankCard;
 	private LocalDate expirationDate;

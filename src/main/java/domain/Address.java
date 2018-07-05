@@ -1,15 +1,21 @@
 package domain;
 
+import java.io.Serializable;
+
 /**
- * La classe Adress définie la constitution d'une adresse de client.
- * Sa structure comporte, en plus de son identifiant de BDD, deux ligne d'adresse, un code postal pouvant être en alpha-nuumérique, une ville et un pays
+ * La classe Adress dï¿½finie la constitution d'une adresse de client.
+ * Sa structure comporte, en plus de son identifiant de BDD, deux ligne d'adresse, un code postal pouvant ï¿½tre en alpha-nuumï¿½rique, une ville et un pays
  * @author Fabien LENOIR & Antoine VOLATRON
  *
  */
-public class Address {
+public class Address implements Entity, Serializable{
 
 	/**
-	 * L'id est un identifiant de base de donnée généré automatiquement
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
+	 * L'id est un identifiant de base de donnï¿½e gï¿½nï¿½rï¿½ automatiquement
 	 */
 	private Integer id;
 	/**
