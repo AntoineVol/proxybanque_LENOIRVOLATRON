@@ -13,15 +13,17 @@
 			<basic name="firstName" />
 			<basic name="lastName" />
 			<basic name="birthday" />
-			<basic name="listBankAccount" />
-			<basic name="addressPrincipal" />
-			<basic name="adressPrincipal" />
-			<one-to-many name="BankAccount" mapped-by="client" />
-			<one-to-many name="Address" mapped-by="client" />
+			<one-to-many name="listBankAccount" mapped-by="client" />
+			<one-to-one  name="addressPrincipal" target-entity="Address" >
+				<join-column name="client_id" referenced-column-name="id"/>
+			</one-to-one>
+			<one-to-one  name="addressSecondary" target-entity="Address" >
+				<join-column name="client_id" referenced-column-name="id"/>
+			</one-to-one>
 		</attributes>
 	</entity>
 	<entity class="domain.Address">
-		<table name="adrress" />
+		<table name="address" />
 		<attributes>
 			<id name="id">
 				<generated-value strategy="IDENTITY" />
@@ -30,10 +32,7 @@
 			<basic name="city" />
 			<basic name="postalCode" />
 			<basic name="addressLine1" />
-			<basic name="addressLine1" />
-			<many-to-one name="client">
-				<join-column name="client_id" referenced-column-name="id" />
-			</many-to-one>
+			<basic name="addressLine2" />
 		</attributes>
 	</entity>
 	<entity class="domain.BankAccount">
@@ -67,12 +66,12 @@
 	<entity class="domain.BankCard">
 		<table name="bankCard" />
 		<inheritance strategy="SINGLE_TABLE" />
-		<discriminator-column name="typeBankCard" />
 		<attributes>
 			<id name="id">
 				<generated-value strategy="IDENTITY" />
 			</id>
 			<basic name="numBankCard" />
+			<basic name="typeBankCard"></basic>
 			<basic name="expirationDate" />
 			<basic name="currentAccount" />
 			<many-to-one name="CurrentAccount">
@@ -82,7 +81,9 @@
 		</attributes>
 	</entity>
 	<entity class="domain.VisaPremierCard" />
+	
 	<entity class="domain.VisaElectronCard" />
+	
 	<entity class="domain.ChequeBook">
 		<table name="chequeBook" />
 		<attributes>

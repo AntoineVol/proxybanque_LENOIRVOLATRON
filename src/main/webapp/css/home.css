@@ -2,13 +2,11 @@
 img[name='logo']{
 	width: 75px;
 	height: 75px;
-	margin-top:-28px;
 }
 
 img[name='deco']{
 	width: 20px;
 	height: 20px;
-	margin-top:-28px;
 }
 
 div.Connexion{
@@ -80,4 +78,7 @@ td{
 /* PAGE COMPLETE */
 body{
 	/* Height: 2000px;	 */
+}
+div#margeHaute{
+	height: 150px;
 }

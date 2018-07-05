@@ -30,19 +30,12 @@ public class webController {
 	 * Methode MVC d'accées à l'URL de la page d'acceuil de l'application
 	 * @return Le Model and View de la JSP Home.jsp
 	 */
-	@GetMapping({"/Home","/"})
+	@GetMapping({"/Home","/*"})
 	public ModelAndView accessHome() {
 		ModelAndView mav = new ModelAndView("Home");
 		mav.addObject("clientIdentification", new Client());
 		return mav;
 	}
-	
-	@PostMapping("/Home")
-	public String checkClientIdentity(@ModelAttribute Client clientIdentification) {
-		
-		return URL_CLIENT+id;
-	}
-	
-	
+
 
 }

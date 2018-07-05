@@ -17,12 +17,12 @@
 	<jpa:repositories base-package="dao" />
 
 	<!-- List of Beans -->
-	<bean id="clientService" class="business.ClientService" />
-	<bean id="bankAccount" class="business.BankAccountService" />
-	<bean id="chequeBookService" class="business.ChequeBookService" />
-	<bean id="addressService" class="business.AddressService" />
-	<bean id="bankCardService" class="business.BanqueCardService" />
-	<bean id="currentAccountService" class="business.CurrentAccountService" />
+	<bean id="clientService" class="business.ClientBusiness" />
+	<bean id="bankAccount" class="business.BankAccountBusiness" />
+	<bean id="chequeBookService" class="business.ChequeBookBusiness" />
+	<bean id="addressService" class="business.AddressBusiness" />
+	<bean id="bankCardService" class="business.BankCardBusiness" />
+	<bean id="currentAccountService" class="business.CurrentAccountBusiness" />
 
 	<!-- Parametrage springframework -->
 	<bean id="viewResolver"
