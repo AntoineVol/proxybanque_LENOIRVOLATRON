@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
+
+	<entity class="domain.Client">
+		<table name="client" />
+		<attributes>
+			<id name="id">
+				<generated-value strategy="IDENTITY" />
+			</id>
+			<basic name="clientAccount" />
+			<basic name="firstName" />
+			<basic name="lastName" />
+			<basic name="birthday" />
+			<basic name="listBankAccount" />
+			<basic name="addressPrincipal" />
+			<basic name="adressPrincipal" />
+			<one-to-many name="BankAccount" mapped-by="client" />
+			<one-to-many name="Address" mapped-by="client" />
+		</attributes>
+	</entity>
+	<entity class="domain.Address">
+		<table name="adrress" />
+		<attributes>
+			<id name="id">
+				<generated-value strategy="IDENTITY" />
+			</id>
+			<basic name="country" />
+			<basic name="city" />
+			<basic name="postalCode" />
+			<basic name="addressLine1" />
+			<basic name="addressLine1" />
+			<many-to-one name="client">
+				<join-column name="client_id" referenced-column-name="id" />
+			</many-to-one>
+		</attributes>
+	</entity>
+	<entity class="domain.BankAccount">
+		<table name="bankAccount" />
+		<inheritance strategy="SINGLE_TABLE" />
+		<discriminator-column name="type" />
+		<attributes>
+			<id name="id">
+				<generated-value strategy="IDENTITY" />
+			</id>
+			<basic name="numAccount" />
+			<basic name="nameAccount" />
+			<basic name="creationDate" />
+			<basic name="bankCard" />
+			<basic name="chequeBook" />
+			<basic name="client" />
+			<many-to-one name="client">
+				<join-column name="client_id" referenced-column-name="id" />
+			</many-to-one>
+		</attributes>
+	</entity>
+	<entity class="domain.SavingAccount">
+		<discriminator-value>SavingAccount</discriminator-value>
+	</entity>
+	<entity class="domain.CurrentAccount">
+		<discriminator-value>CurrentAccount</discriminator-value>
+		<attributes>
+			<basic name="bankCard" />
+			<one-to-many name="BankCard" mapped-by="currentAccount" />
+		</attributes>
+	</entity>
+	<entity class="domain.BankCard">
+		<table name="bankCard" />
+		<attributes>
+			<id name="id">
+				<generated-value strategy="IDENTITY" />
+			</id>
+			<basic name="numBankCard" />
+			<basic name="expirationDate" />
+			<basic name="currentAccount" />
+			<many-to-one name="CurrentAccount">
+				<join-column name="currentAccount_id"
+					referenced-column-name="id" />
+			</many-to-one>
+		</attributes>
+	</entity>
+	<entity class="domain.ChequeBook">
+		<table name="chequeBook" />
+		<attributes>
+			<id name="id">
+				<generated-value strategy="IDENTITY" />
+			</id>
+			<basic name="sendDate" />
+			<basic name="receptionDate" />
+			<basic name="currentAccount" />
+			<many-to-one name="CurrentAccount">
+				<join-column name="currentAccount_id"
+					referenced-column-name="id" />
+			</many-to-one>
+		</attributes>
+	</entity>
+</entity-mappings>
