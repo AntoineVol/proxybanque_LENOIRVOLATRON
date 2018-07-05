@@ -1,8 +1,14 @@
 package web;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.time.LocalDate;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -63,7 +69,7 @@ public class WebController {
 
 
 	@GetMapping({"/Home{idSearch}","/index{idSearch}"})
-	public ModelAndView accessHomeError(@PathVariable Integer idSearch) {
+	public ModelAndView accessHome(@PathVariable Integer idSearch) {
 		CurrentAccount compte = new  CurrentAccount();
 		compte.setBalance(500.00);
 		compte.setTypeBankAccount(TypeBankAccount.CURRENT_ACCOUNT);
@@ -76,22 +82,22 @@ public class WebController {
 	}
 
 	@PostMapping({ "/Home{idSearch}", "/index" })
-	public String searchClientName(@ModelAttribute Client clientIdentification) {
-		Integer path;
-		ResearchComponent researchComponent = this.clientBusiness.findAllByFirstNameAndLastName(
-				clientIdentification.getFirstName(), clientIdentification.getLastName());
-		if (researchComponent.getListClient().isEmpty() == true) {
-			path=0;
-		}else {
-			path=researchComponent.getListClient().get(0).getId();
-		}
-		return "redirect:/Home"+path+".html";
-	}
+	public String searchClient(@ModelAttribute Client clientIdentification) {
+			Integer path;
+			ResearchComponent researchComponent = this.clientBusiness.findAllByFirstNameAndLastName(
+					clientIdentification.getFirstName(), clientIdentification.getLastName());
+			if (researchComponent.getListClient().isEmpty() == true) {
+				path=0;
+			}else {
+				path=researchComponent.getListClient().get(0).getId();
+			}
+			return "redirect:/Home"+path+".html";
 
+	}
 	
-	@PostMapping("/Home{idSearch}")
-	public String searchDateClient(@ModelAttribute Client clientDate, @PathVariable Integer idSearch) {
-		int idClient = this.clientBusiness.validateClientBirthday(idSearch, clientDate.getBirthday());
+	@PostMapping("/Home/Date{idSearch}")
+	public String checkDate(@RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate birthday, @PathVariable Integer idSearch) {
+		int idClient = this.clientBusiness.validateClientBirthday(idSearch, birthday);
 		if(idClient<1) {
 			return "redirect:/Home"+idSearch+".html";
 		} else if(idClient==0){
@@ -100,6 +106,7 @@ public class WebController {
 			Client client = this.clientBusiness.findById(idSearch);
 			return URL_CLIENT+client.getId();
 		}
+
 	}
 	
 	@PostMapping("/Home/Date")
@@ -115,5 +122,6 @@ public class WebController {
 		Client client = this.clientBusiness.findById(idClient);
 		mav.addObject("listCompte", this.bankAccountBusiness.getAllByClient(client));
 		return mav;
+
 	}
 }
