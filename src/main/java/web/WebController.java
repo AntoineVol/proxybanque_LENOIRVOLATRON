@@ -73,20 +73,22 @@ public class WebController {
 		ModelAndView mav = new ModelAndView("Home");
 		mav.addObject("idSearch", idSearch);
 		mav.addObject("clientDate", new Client());
-		mav.addObject("clientIdentification", new Client());
 		return mav;
 	}
 
 	@PostMapping({ "/Home{idSearch}", "/index" })
-	public String searchClient(@ModelAttribute Client clientIdentification) {
-			
+
+	public String searchClient(@RequestParam String name) {
+
 			Integer path;
+			String[] nameArray=name.split(" ");
 			ResearchComponent researchComponent = this.clientBusiness.findAllByFirstNameAndLastName(
-					clientIdentification.getFirstName(), clientIdentification.getLastName());
+					nameArray[0], nameArray[1]);
+			
 			if (researchComponent.getListClient().isEmpty() == true) {
 				path=0;
 			}else {
-				path=researchComponent.getListClient().get(0).getId();
+				path=researchComponent.getId();
 			}
 			return "redirect:/Home"+path+".html";
 
@@ -95,17 +97,33 @@ public class WebController {
 	@PostMapping("/Home/Date{idSearch}")
 	public String checkDate(@RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate birthday, @PathVariable Integer idSearch) {
 		int idClient = this.clientBusiness.validateClientBirthday(idSearch, birthday);
-		if(idClient<1) {
-			return "redirect:/Home"+idSearch+".html";
-		} else if(idClient==0){
-			return "redirect:/Home"+idSearch+".html";
+		if(idClient==0) {
+			return "redirect:/Home"+idSearch+"/Error0"+".html";
+		} else if(idClient<0){
+			return "redirect:/Home"+idSearch+"/Error1"+".html";
 		} else {
-			Client client = this.clientBusiness.findById(idSearch);
+			Client client = this.clientBusiness.findById(idClient);
 			return URL_CLIENT+client.getId();
 		}
 
 	}
 	
+
+	@GetMapping({"/Home{idSearch}/Error{codeError}"})
+	public ModelAndView accessDateError(@PathVariable Integer idSearch,@PathVariable Integer codeError) {
+		ModelAndView mav = new ModelAndView("Home");
+		mav.addObject("idSearch", idSearch);
+		mav.addObject("clientDate", new Client());
+		mav.addObject("clientIdentification", new Client());
+		return mav;
+	}
+	
+	@PostMapping("/Home/Date")
+	public String accessAccount(){
+		
+		return URL_CLIENT + 3;
+	}
+
 	
 	@GetMapping("/Client")
 	public ModelAndView listCompte(@RequestParam Integer idClient){
@@ -114,6 +132,7 @@ public class WebController {
 		Client client = this.clientBusiness.findById(idClient);
 		listCompte = this.bankAccountBusiness.getAllByClient(client);
 		mav.addObject("listCompte", listCompte);
+		mav.addObject("client", client);
 		return mav;
 	}
 	

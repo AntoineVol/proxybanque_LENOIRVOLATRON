@@ -1,4 +1,9 @@
 <%@ include file="header.jsp"%>
+<c:set var="connectionStatus" value="Disconnected" />
+<c:set var="clientFirstName" value="Client" />
+<c:set var="clientLastName" value="non identifié" />
+<c:set var="connectionColor" value="red" />
+<%@ include file="navbar.jsp"%>
 <body>
 
 	<div id=margeHaute></div>
@@ -6,15 +11,12 @@
 		class="container-fluid d-flex justify-content-center align-items-center">
 		<c:choose>
 			<c:when test="${empty idSearch or idSearch==0}">
-				<form:form modelAttribute="clientIdentification" method="post">
+				<form method="post">
 					<legend>Identification</legend>
 					<div class="form-group">
-						<form:input type="text" class="form-control" path="firstName"
-							id="firstName" placeholder="Prenom" required="required" />
-					</div>
-					<div class="form-group">
-						<form:input type="text" class="form-control" path="lastName"
-							id="lastName" placeholder="Nom" required="required" />
+						<input type="text" class="form-control" name="name" id="name"
+							placeholder="Prenom Nom" required="required" /> <small
+							id="nameHelpInline" class="text-muted"> Les prenom composés doivent être lié par un "-" </small>
 					</div>
 					<div class="form-group">
 						<button type="submit" class="btn btn-success">Valider</button>
@@ -23,11 +25,11 @@
 						<div class="alert alert-danger" role="alert">Le prenom ou le
 							nom est erroné !</div>
 					</c:if>
-				</form:form>
+				</form>
 
 			</c:when>
 			<c:otherwise>
-				<c:url value="/Home/Date${idSearch}.html" var="dateUrl"/>
+				<c:url value="/Home/Date${idSearch}.html" var="dateUrl" />
 				<form method="post" action="${dateUrl}">
 					<legend>Renseigner votre date de naissance</legend>
 					<div class="form-group">
@@ -37,6 +39,15 @@
 					<div class="form-group">
 						<button type="submit" class="btn btn-success">Valider</button>
 					</div>
+					<c:if test="${codeError==0}">
+						<div class="alert alert-danger" role="alert">La date
+							renseignée n'est pas la bonne !</div>
+					</c:if>
+					<c:if test="${codeError==1}">
+						<div class="alert alert-danger" role="alert">Il existe
+							plusieurs clients identique pour ce couple (nom/prenom/date de
+							naissance) !</div>
+					</c:if>
 				</form>
 				<div class="dropdown-menu"></div>
 				<div id=margeHaute></div>

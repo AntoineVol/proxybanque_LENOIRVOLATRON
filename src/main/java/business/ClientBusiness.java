@@ -21,9 +21,12 @@ public class ClientBusiness extends CrudBusiness<Client>{
 	@Autowired
 	ObjectFactory<ResearchComponent> clientObjectFactory;
 		
-	public ResearchComponent findAllByFirstNameAndLastName(String firstName, String lastName){
+	public ResearchComponent findAllByFirstNameAndLastName(String firstPartName, String secondPartName){
 		ResearchComponent researchComponent  = this.clientObjectFactory.getObject();
-		researchComponent.searchMethod(firstName, lastName);
+		researchComponent.searchMethod(firstPartName, secondPartName);
+		if(researchComponent.getListClient().size()==0) {
+			researchComponent.searchMethod(secondPartName,firstPartName);
+		}
 		listResearchComponant.put(researchComponent.getId(), researchComponent);
 		return researchComponent;
 	}
@@ -33,6 +36,7 @@ public class ClientBusiness extends CrudBusiness<Client>{
 		int resultId=0;
 		for(Client client : listResearchComponant.get(idResearchComponant).getListClient()){
 			if(client.getBirthday().equals(birthday)) {
+				
 				matchAccount++;
 				resultId = client.getId();
 			}
