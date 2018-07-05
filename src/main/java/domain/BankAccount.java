@@ -8,6 +8,7 @@ public abstract class BankAccount implements Entity, Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private Integer id;
+	private TypeBankAccount typeBankAccount;
 	private Integer numAccount;
 	private LocalDate creationDate;
 	private Double balance;
@@ -49,6 +50,12 @@ public abstract class BankAccount implements Entity, Serializable{
 	}
 	public void setClient(Client client) {
 		this.client = client;
+	}
+	public TypeBankAccount getTypeBankAccount() {
+		return typeBankAccount;
+	}
+	public void setTypeBankAccount(TypeBankAccount typeBankAccount) {
+		this.typeBankAccount = typeBankAccount;
 	}
 	private Client client;
 	

@@ -9,6 +9,7 @@ public abstract class BankCard implements Entity, Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private Integer id;
+	private TypeBankCard typeBankCard;
 	private Integer numBankCard;
 	private LocalDate expirationDate;
 	private CurrentAccount currentAccount;
@@ -37,6 +38,12 @@ public abstract class BankCard implements Entity, Serializable{
 	}
 	public void setCurrentAccount(CurrentAccount currentAccount) {
 		this.currentAccount = currentAccount;
+	}
+	public TypeBankCard getTypeBankCard() {
+		return typeBankCard;
+	}
+	public void setTypeBankCard(TypeBankCard typeBankCard) {
+		this.typeBankCard = typeBankCard;
 	}
 	
 
