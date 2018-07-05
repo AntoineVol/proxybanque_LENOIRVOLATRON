@@ -39,11 +39,11 @@
 	<entity class="domain.BankAccount">
 		<table name="bankAccount" />
 		<inheritance strategy="SINGLE_TABLE" />
-		<discriminator-column name="type" />
 		<attributes>
 			<id name="id">
 				<generated-value strategy="IDENTITY" />
 			</id>
+			<basic name="typeBankAccount"/>
 			<basic name="numAccount" />
 			<basic name="nameAccount" />
 			<basic name="creationDate" />
@@ -55,9 +55,7 @@
 			</many-to-one>
 		</attributes>
 	</entity>
-	<entity class="domain.SavingAccount">
-		<discriminator-value>SavingAccount</discriminator-value>
-	</entity>
+	<entity class="domain.SavingAccount" />
 	<entity class="domain.CurrentAccount">
 		<discriminator-value>CurrentAccount</discriminator-value>
 		<attributes>
@@ -65,8 +63,11 @@
 			<one-to-many name="BankCard" mapped-by="currentAccount" />
 		</attributes>
 	</entity>
+	
 	<entity class="domain.BankCard">
 		<table name="bankCard" />
+		<inheritance strategy="SINGLE_TABLE" />
+		<discriminator-column name="typeBankCard" />
 		<attributes>
 			<id name="id">
 				<generated-value strategy="IDENTITY" />
@@ -80,6 +81,8 @@
 			</many-to-one>
 		</attributes>
 	</entity>
+	<entity class="domain.VisaPremierCard" />
+	<entity class="domain.VisaElectronCard" />
 	<entity class="domain.ChequeBook">
 		<table name="chequeBook" />
 		<attributes>
