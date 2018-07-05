@@ -25,8 +25,8 @@
 		<!-- Logo banque-->
 		<div class="col-md-2">
 			<div class="navbar-brand">
-				<a id="ListeClientColor" href="${homeUrl}"
-					class="col-sm-3"> <img name="logo"
+				<a id="ListeClientColor" href="${homeUrl}" class="col-sm-3"> <img
+					name="logo"
 					src="${pageContext.request.contextPath}/images/logo-banque.jpg"
 					alt="LOGO"></a>
 
@@ -41,7 +41,8 @@
 		<!-- UserName -->
 		<div class="Connexion col-md-2">
 			<h4>
-				<font color="red" style="font-variant: small-caps;"><b>Client non identifié</b></font>
+				<font color="red" style="font-variant: small-caps;"><b>Client
+						non identifié</b></font>
 			</h4>
 			<h5>
 				<font color="green" style="font-variant: small-caps;"><b>Disconnected</b></font>
@@ -56,6 +57,46 @@
 			</div>
 		</div>
 	</nav>
+	<!-- Fin entête -->
 
+	<!-- Contenu page -->
+	<div class="container-fluid">
+		<form:form modelAttribute="clientIdentification" method="post">
+			<legend>Identification</legend>
+			<div class="form-row">
+				<div class="col">
+					<form:input type="text" class="form-control" path="firstName"
+						id="firstName" required="required" />
+				</div>
+				<div class="col">
+					<form:input type="text" class="form-control" path="lastName"
+						id="lastName" required="required" />
+				</div>
+				<div class="col">
+					<form:input type="date" class="form-control" path="birthday"
+						id="birthday" required="required" />
+				</div>
+				<div class="col">
+					<button type="submit" class="btn btn-success">Modifier</button>
+				</div>
+			</div>
+		</form:form>
+	</div>
+	<!-- Fin du contenu page -->
+
+	<!-- Pied de page -->
+	<br>
+	<br>
+	<br>
+	<br>
+	<nav class="navbar fixed-bottom navbar-dark bg-dark">
+		<footer class="container">
+			<p>
+				<font color="white"> 2018 © ProxiBanque. Tous droits
+					réservés. </font>
+			</p>
+		</footer>
+	</nav>
+	<!-- Fin de pied de page -->	
 </body>
 </html>
