@@ -24,8 +24,8 @@
 	<bean id="chequeBookService" class="business.ChequeBookBusiness" />
 	<bean id="addressService" class="business.AddressBusiness" />
 	<bean id="bankCardService" class="business.BankCardBusiness" />
-	<bean id="currentAccountService"
-		class="business.CurrentAccountBusiness" />
+	<bean id="currentAccountService" class="business.CurrentAccountBusiness" />
+	<bean id="savingAccountService" class="business.SavingAccountBusiness" />
 
 	<!-- Parametrage springframework -->
 	<bean id="viewResolver"

@@ -38,6 +38,7 @@
 	<entity class="domain.BankAccount">
 		<table name="bankAccount" />
 		<inheritance strategy="SINGLE_TABLE" />
+			<discriminator-column name="TYPE"/>
 		<attributes>
 			<id name="id">
 				<generated-value strategy="IDENTITY" />
@@ -49,14 +50,17 @@
 			<basic name="bankCard" />
 			<basic name="chequeBook" />
 			<basic name="client" />
+			
 			<many-to-one name="client">
 				<join-column name="client_id" referenced-column-name="id" />
 			</many-to-one>
 		</attributes>
 	</entity>
-	<entity class="domain.SavingAccount" />
+	<entity class="domain.SavingAccount">
+		<discriminator-value>SAVING_ACCOUNT</discriminator-value>
+	</entity>
 	<entity class="domain.CurrentAccount">
-		<discriminator-value>CurrentAccount</discriminator-value>
+		<discriminator-value>CURRENT_ACCOUNT</discriminator-value>
 		<attributes>
 			<basic name="bankCard" />
 			<one-to-many name="BankCard" mapped-by="currentAccount" />

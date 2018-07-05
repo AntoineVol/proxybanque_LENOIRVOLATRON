@@ -1,16 +1,21 @@
 package web;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import business.BankAccountBusiness;
 import business.ClientBusiness;
 import business.CurrentAccountBusiness;
 import business.ResearchComponent;
+import business.SavingAccountBusiness;
 import domain.Client;
 import domain.CurrentAccount;
 import domain.TypeBankAccount;
@@ -23,7 +28,7 @@ import domain.TypeBankAccount;
  *
  */
 @Controller
-public class WebController {
+public class webController {
 
 	/**
 	 * Url de la jsp d'acceuil
@@ -36,14 +41,19 @@ public class WebController {
 	/**
 	 * Url de la jsp affichant les comptes du client
 	 */
-	final String URL_CLIENT = "redirect:/client.html?id=";
+	final String URL_CLIENT = "redirect:/Client.html?idClient=";
 	
+	private static final Logger LOGGER = LoggerFactory.getLogger("fr.gtm.proxybanque_LENOIRVOLATRON");
 
 	@Autowired
 	ClientBusiness clientBusiness;
-	
 	@Autowired
 	CurrentAccountBusiness currentAccountBusiness;
+	@Autowired
+	SavingAccountBusiness savingAccountBusiness;
+	@Autowired
+	BankAccountBusiness bankAccountBusiness;
+
 
 	/**
 	 * Methode MVC d'accées à l'URL de la page d'acceuil de l'application
@@ -90,7 +100,20 @@ public class WebController {
 			Client client = this.clientBusiness.findById(idSearch);
 			return URL_CLIENT+client.getId();
 		}
-		
 	}
-
+	
+	@PostMapping("/Home/Date")
+	public String accessAccount(){
+		
+		return URL_CLIENT + 3;
+	}
+	
+	@GetMapping("/Client")
+	public ModelAndView listCompte(@RequestParam Integer idClient){
+		//LOGGER.debug("Je suis làààààààààààààààààà");
+		ModelAndView mav = new ModelAndView("Client");
+		Client client = this.clientBusiness.findById(idClient);
+		mav.addObject("listCompte", this.bankAccountBusiness.getAllByClient(client));
+		return mav;
+	}
 }

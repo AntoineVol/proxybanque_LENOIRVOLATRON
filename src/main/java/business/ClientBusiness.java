@@ -44,4 +44,5 @@ public class ClientBusiness extends CrudBusiness<Client>{
 		}
 		
 	}
+
 }
