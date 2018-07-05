@@ -13,7 +13,7 @@
         http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
 	<mvc:annotation-driven />
-	<context:component-scan base-package="domain web" />
+	<context:component-scan base-package="domain, web" />
 	<jpa:repositories base-package="dao" />
 
 	<!-- List of Beans -->

@@ -44,5 +44,6 @@ public abstract class CrudBusiness<ENTITY extends Entity>{
 		}
 		return this.repo.save(entity);
 	}
+	
 }
 		
