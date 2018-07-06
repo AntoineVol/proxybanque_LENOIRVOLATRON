@@ -9,6 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 import domain.BankAccount;
 import domain.Client;
 
+/**
+ * Couche Repository dao des Comptes Bancaires
+ * @author Fabien LENOIR & Antoine VOLATRON
+ *
+ */
 @Repository
 public interface BankAccountRepository extends JpaRepository<BankAccount, Integer> {
 

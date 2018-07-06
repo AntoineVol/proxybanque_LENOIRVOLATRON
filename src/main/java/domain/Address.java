@@ -126,9 +126,17 @@ public class Address implements Entity, Serializable{
 	public void setCountry(String country) {
 		this.country = country;
 	}
+	/**
+	 * Getter du client
+	 * @return un Client
+	 */
 	public Client getClient() {
 		return client;
 	}
+	/**
+	 * Setter d'nu Client
+	 * @param un Client
+	 */
 	public void setClient(Client client) {
 		this.client = client;
 	}

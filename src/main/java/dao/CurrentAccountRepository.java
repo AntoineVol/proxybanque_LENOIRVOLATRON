@@ -5,6 +5,11 @@ import org.springframework.stereotype.Repository;
 
 import domain.CurrentAccount;
 
+/**
+ * Couche Repository dao des Comptes Courants
+ * @author Fabien LENOIR & Antoine VOLATRON
+ *
+ */
 @Repository
 public interface CurrentAccountRepository extends JpaRepository<CurrentAccount, Integer> {
 

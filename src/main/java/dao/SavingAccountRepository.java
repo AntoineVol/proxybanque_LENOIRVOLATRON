@@ -5,6 +5,11 @@ import org.springframework.stereotype.Repository;
 
 import domain.SavingAccount;
 
+/**
+ * Couche Repository dao des Comptes Epargnes
+ * @author Fabien LENOIR & Antoine VOLATRON
+ *
+ */
 @Repository
 public interface SavingAccountRepository extends JpaRepository<SavingAccount, Integer> {
 
