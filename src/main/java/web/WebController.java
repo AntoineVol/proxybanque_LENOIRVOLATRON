@@ -23,8 +23,11 @@ import business.CurrentAccountBusiness;
 import business.ResearchComponent;
 import business.SavingAccountBusiness;
 import domain.BankAccount;
+import domain.BankCard;
 import domain.Client;
 import domain.CurrentAccount;
+import domain.VisaElectronCard;
+import domain.VisaPremierCard;
 
 /**
  * Controller de l'application. Il permet la direction et la gestion des
@@ -129,32 +132,46 @@ public class WebController {
 		return mav;
 	}
 	
-	@GetMapping("/Client{idClient}/Withdrawal")
-	public ModelAndView withdrawal(@PathVariable Integer idClient, @RequestParam Integer idCompte){
+	@GetMapping("/Client{idClient}/Withdrawal{codeError}")
+	public ModelAndView withdrawal(@PathVariable Integer idClient,@PathVariable Integer codeError, @RequestParam Integer idCompte){
 		ModelAndView mav = new ModelAndView("Withdrawal");
 		BankAccount account = this.bankAccountBusiness.findById(idCompte);
 		Client client = this.clientBusiness.findById(idClient);
 		mav.addObject("compte", account);
 		mav.addObject("client",client);
+		mav.addObject("codeError",codeError);
 		return mav;
 	}
-	@PostMapping("/Client{idClient}/Withdrawal")
-	public ModelAndView doWithdrawal(@PathVariable Integer idClient,@RequestParam double amount, @RequestParam String withdrawMean, @RequestParam Integer idCompte){
+	@PostMapping("/Client{idClient}/Withdrawal/Cash")
+	public String doCashWithdrawal(@PathVariable Integer idClient,@RequestParam long amount, @RequestParam Integer idCompte){
 		BankAccount withdrawAccount = this.bankAccountBusiness.findById(idCompte);
 		if(amount>300) {
-			return "redirect:";
-		}else if(amount>900) {
-			return "redirect:";
-		}else if(t) {
-			return "redirect:/Client/MoneyTransfer-1.html?idClient="+idClient;
-		}else {
-			withdrawAccount.setBalance(withdrawAccount.getBalance()-amount);
-			payedAccount.setBalance(payedAccount.getBalance()+amount);
-			this.bankAccountBusiness.update(withdrawAccount);
-			this.bankAccountBusiness.update(payedAccount);
-			return "redirect:/Client/MoneyTransfer2.html?idClient="+idClient;
+			return "redirect:/Client"+idClient+"/Withdrawal0.html?idCompte="+idCompte;
+		}else if(withdrawAccount.getBalance()<amount) {
+			return "redirect:/Client"+idClient+"/Withdrawal1.html?idCompte="+idCompte;
 		}
-		return null;
+		withdrawAccount.setBalance(withdrawAccount.getBalance()-amount);
+		this.bankAccountBusiness.update(withdrawAccount);
+		return "redirect:/Client"+idClient+"/Withdrawal3.html?idCompte="+idCompte;
+	}
+	
+	@PostMapping("/Client{idClient}/Withdrawal/BankCard")
+	public String doBankCardWithdrawal(@PathVariable Integer idClient,@RequestParam String typeBanqueCard, @RequestParam Integer idCompte){
+		CurrentAccount withdrawAccount = this.currentAccountBusiness.findById(idCompte);
+		LocalDate today = LocalDate.now();
+		if(withdrawAccount.getBankCard().getExpirationDate().isAfter(today)) {
+			return "redirect:/Client"+idClient+"/Withdrawal4.html?idCompte="+idCompte;
+		}else {
+			BankCard cb = null;
+			if(typeBanqueCard.equals("VISA_ELECTRON")) {
+				cb = new VisaElectronCard();
+			}else if(typeBanqueCard.equals("VISA_PREMIER")){
+				cb = new VisaPremierCard();
+			}
+			cb.setCurrentAccount(withdrawAccount);
+			//Parametrer la nouvelle carte avant de la créer
+			return "redirect:/Client"+idClient+"/Withdrawal5.html?idCompte="+idCompte;
+		}
 	}
 	
 	@GetMapping("/Client/MoneyTransfer{codeResponse}")
