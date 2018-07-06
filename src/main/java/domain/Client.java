@@ -16,8 +16,7 @@ public class Client implements Entity, Serializable{
 	private String lastName;
 	private LocalDate birthday;
 	private List<BankAccount> listBankAccount;
-	private Address adressPrincipal;
-	private Address adressSecondary;
+	private Address address;
 	
 	//GETTER & SETTER
 	public Integer getId() {
@@ -56,18 +55,15 @@ public class Client implements Entity, Serializable{
 	public void setListBankAccount(List<BankAccount> listBankAccount) {
 		this.listBankAccount = listBankAccount;
 	}
-	public Address getAdressPrincipal() {
-		return adressPrincipal;
+	public Address getAddress() {
+		return address;
 	}
-	public void setAdressPrincipal(Address adressPrincipal) {
-		this.adressPrincipal = adressPrincipal;
+	public void setAddress(Address address) {
+		this.address = address;
 	}
-	public Address getAdressSecondary() {
-		return adressSecondary;
-	}
-	public void setAdressSecondary(Address adressSecondary) {
-		this.adressSecondary = adressSecondary;
-	}
+
+
+	
 
 
 }

@@ -38,6 +38,8 @@ public class Address implements Entity, Serializable{
 	 */
 	private String country;
 	
+	private Client client;
+	
 	
 	//GETTER & SETTER
 	/**
@@ -123,5 +125,11 @@ public class Address implements Entity, Serializable{
 	 */
 	public void setCountry(String country) {
 		this.country = country;
+	}
+	public Client getClient() {
+		return client;
+	}
+	public void setClient(Client client) {
+		this.client = client;
 	}
 }

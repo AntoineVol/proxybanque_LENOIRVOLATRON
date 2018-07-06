@@ -10,7 +10,7 @@ public class ChequeBook implements Entity, Serializable{
 	private Integer id;
 	private LocalDate sendDate;
 	private LocalDate receptionDate;
-	private CurrentAccount currentAccount;
+	private BankAccount bankAccount;
 	
 	
 	//GETTER & SETTER
@@ -32,12 +32,14 @@ public class ChequeBook implements Entity, Serializable{
 	public void setReceptionDate(LocalDate receptionDate) {
 		this.receptionDate = receptionDate;
 	}
-	public CurrentAccount getCurrentAccount() {
-		return currentAccount;
+	public BankAccount getBankAccount() {
+		return bankAccount;
 	}
-	public void setCurrentAccount(CurrentAccount currentAccount) {
-		this.currentAccount = currentAccount;
+	public void setBankAccount(BankAccount bankAccount) {
+		this.bankAccount = bankAccount;
 	}
+
+
 	
 
 }

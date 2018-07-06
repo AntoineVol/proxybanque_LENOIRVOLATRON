@@ -33,17 +33,18 @@ public abstract class BankCard implements Entity, Serializable{
 	public void setExpirationDate(LocalDate expirationDate) {
 		this.expirationDate = expirationDate;
 	}
-	public CurrentAccount getCurrentAccount() {
-		return currentAccount;
-	}
-	public void setCurrentAccount(CurrentAccount currentAccount) {
-		this.currentAccount = currentAccount;
-	}
+
 	public TypeBankCard getTypeBankCard() {
 		return typeBankCard;
 	}
 	public void setTypeBankCard(TypeBankCard typeBankCard) {
 		this.typeBankCard = typeBankCard;
+	}
+	public CurrentAccount getCurrentAccount() {
+		return currentAccount;
+	}
+	public void setCurrentAccount(CurrentAccount currentAccount) {
+		this.currentAccount = currentAccount;
 	}
 	
 

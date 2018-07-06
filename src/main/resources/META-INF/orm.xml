@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <entity-mappings version="2.0"
-	xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
 
 	<entity class="domain.Client">
@@ -14,14 +15,14 @@
 			<basic name="lastName" />
 			<basic name="birthday" />
 			<one-to-many name="listBankAccount" mapped-by="client" />
-			<one-to-one  name="addressPrincipal" target-entity="Address" >
-				<join-column name="client_id" referenced-column-name="id"/>
+			<one-to-one name="address">
+				<join-column name="address_id"
+					referenced-column-name="id" />
 			</one-to-one>
-			<one-to-one  name="addressSecondary" target-entity="Address" >
-				<join-column name="client_id" referenced-column-name="id"/>
-			</one-to-one>
+
 		</attributes>
 	</entity>
+
 	<entity class="domain.Address">
 		<table name="address" />
 		<attributes>
@@ -33,39 +34,54 @@
 			<basic name="postalCode" />
 			<basic name="addressLine1" />
 			<basic name="addressLine2" />
+			<one-to-one name="client">
+				<join-column name="client_id"
+					referenced-column-name="id" />
+			</one-to-one>
 		</attributes>
 	</entity>
+
+
+
+	<entity class="domain.SavingAccount">
+		<discriminator-value>SAVING_ACCOUNT</discriminator-value>
+	</entity>
+
+
+	<entity class="domain.CurrentAccount">
+		<discriminator-value>CURRENT_ACCOUNT</discriminator-value>
+		<attributes>
+			<one-to-one name="bankCard">
+				<join-column name="bankCard_id"
+					referenced-column-name="id" />
+			</one-to-one>
+		</attributes>
+	</entity>
+
+
 	<entity class="domain.BankAccount">
 		<table name="bankAccount" />
 		<inheritance strategy="SINGLE_TABLE" />
-			<discriminator-column name="TYPE"/>
+		<discriminator-column name="TYPE" />
 		<attributes>
 			<id name="id">
 				<generated-value strategy="IDENTITY" />
 			</id>
-			<basic name="typeBankAccount"/>
+			<basic name="typeBankAccount" />
 			<basic name="numAccount" />
 			<basic name="nameAccount" />
 			<basic name="creationDate" />
-			<basic name="client" />
 			<many-to-one name="client">
-				<join-column name="client_id" referenced-column-name="id" />
+				<join-column name="client_id"
+					referenced-column-name="id" />
 			</many-to-one>
-			<one-to-one name="chequeBook" mapped-by="bankAccount"/>
-			<one-to-one name="bankCard" mapped-by="bankAccount"/>
+			<one-to-one name="chequeBook">
+				<join-column name="chequeBook_id"
+					referenced-column-name="id" />
+			</one-to-one>
 		</attributes>
 	</entity>
-	<entity class="domain.SavingAccount">
-		<discriminator-value>SAVING_ACCOUNT</discriminator-value>
-	</entity>
-	<entity class="domain.CurrentAccount">
-		<discriminator-value>CURRENT_ACCOUNT</discriminator-value>
-		<attributes>
-			<basic name="bankCard" />
-			<one-to-many name="BankCard" mapped-by="currentAccount" />
-		</attributes>
-	</entity>
-	
+
 	<entity class="domain.BankCard">
 		<table name="bankCard" />
 		<inheritance strategy="SINGLE_TABLE" />
@@ -76,16 +92,16 @@
 			<basic name="numBankCard" />
 			<basic name="typeBankCard"></basic>
 			<basic name="expirationDate" />
-			<basic name="currentAccount" />
-			<one-to-one name="bankAccount">
-				<join-column name="currentAccount_id" referenced-column-name="id"/>
+			<one-to-one name="currentAccount">
+				<join-column name="currentAccount_id"
+					referenced-column-name="id" />
 			</one-to-one>
 		</attributes>
 	</entity>
 	<entity class="domain.VisaPremierCard" />
-	
+
 	<entity class="domain.VisaElectronCard" />
-	
+
 	<entity class="domain.ChequeBook">
 		<table name="chequeBook" />
 		<attributes>
@@ -94,9 +110,9 @@
 			</id>
 			<basic name="sendDate" />
 			<basic name="receptionDate" />
-			<basic name="currentAccount" />
-			<one-to-one name="bankAccount" >
-				<join-column name="currentAccount_id" referenced-column-name="id"/>
+			<one-to-one name="bankAccount">
+				<join-column name="bankAccount_id"
+					referenced-column-name="id" />
 			</one-to-one>
 		</attributes>
 	</entity>

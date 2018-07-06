@@ -1,6 +1,5 @@
 package web;
 
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +55,7 @@ public class WebController {
 	 * Url de la jsp affichant les comptes du client
 	 */
 	final String URL_CLIENT = "redirect:/Client.html?idClient=";
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger("fr.gtm.proxybanque_LENOIRVOLATRON");
 
 	@Autowired
@@ -70,15 +69,13 @@ public class WebController {
 	@Autowired
 	ChequeBookBusiness chequeBookBusiness;
 
-
 	/**
 	 * Methode MVC d'accées à l'URL de la page d'acceuil de l'application
 	 * 
 	 * @return Le Model and View de la JSP Home.jsp
 	 */
 
-
-	@GetMapping({"/Home{idSearch}","/index{idSearch}"})
+	@GetMapping({ "/Home{idSearch}", "/index{idSearch}" })
 	public ModelAndView accessHome(@PathVariable Integer idSearch) {
 		ModelAndView mav = new ModelAndView("Home");
 		mav.addObject("idSearch", idSearch);
@@ -89,45 +86,43 @@ public class WebController {
 	@PostMapping({ "/Home{idSearch}", "/index" })
 
 	public String searchClient(@RequestParam String name) {
-			ResearchComponent researchComponent=null;
-			Integer path;
-			String[] nameArray=name.split(" ");
-			if(nameArray.length==1) {
-				 researchComponent = this.clientBusiness.findAllByFirstNameAndLastName(
-						nameArray[0], null);
-			}else if(nameArray.length==2){
-				 researchComponent = this.clientBusiness.findAllByFirstNameAndLastName(
-						nameArray[0], nameArray[1]);				
-			}else {
-				return "redirect:/Home-1.html";
-			}
-			
-			if (researchComponent.getListClient().isEmpty() == true) {
-				path=0;
-			}else {
-				path=researchComponent.getId();
-			}
-			return "redirect:/Home"+path+".html";
+		ResearchComponent researchComponent = null;
+		Integer path;
+		String[] nameArray = name.split(" ");
+		if (nameArray.length == 1) {
+			researchComponent = this.clientBusiness.findAllByFirstNameAndLastName(nameArray[0], null);
+		} else if (nameArray.length == 2) {
+			researchComponent = this.clientBusiness.findAllByFirstNameAndLastName(nameArray[0], nameArray[1]);
+		} else {
+			return "redirect:/Home-1.html";
+		}
+
+		if (researchComponent.getListClient().isEmpty() == true) {
+			path = 0;
+		} else {
+			path = researchComponent.getId();
+		}
+		return "redirect:/Home" + path + ".html";
 
 	}
-	
+
 	@PostMapping("/Home/Date{idSearch}")
-	public String checkDate(@RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate birthday, @PathVariable Integer idSearch) {
+	public String checkDate(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate birthday,
+			@PathVariable Integer idSearch) {
 		int idClient = this.clientBusiness.validateClientBirthday(idSearch, birthday);
-		if(idClient==0) {
-			return "redirect:/Home"+idSearch+"/Error0"+".html";
-		} else if(idClient<0){
-			return "redirect:/Home"+idSearch+"/Error1"+".html";
+		if (idClient == 0) {
+			return "redirect:/Home" + idSearch + "/Error0" + ".html";
+		} else if (idClient < 0) {
+			return "redirect:/Home" + idSearch + "/Error1" + ".html";
 		} else {
 			Client client = this.clientBusiness.findById(idClient);
-			return URL_CLIENT+client.getId();
+			return URL_CLIENT + client.getId();
 		}
 
 	}
-	
 
-	@GetMapping({"/Home{idSearch}/Error{codeError}"})
-	public ModelAndView accessDateError(@PathVariable Integer idSearch,@PathVariable Integer codeError) {
+	@GetMapping({ "/Home{idSearch}/Error{codeError}" })
+	public ModelAndView accessDateError(@PathVariable Integer idSearch, @PathVariable Integer codeError) {
 		ModelAndView mav = new ModelAndView("Home");
 		mav.addObject("idSearch", idSearch);
 		mav.addObject("clientDate", new Client());
@@ -136,7 +131,7 @@ public class WebController {
 	}
 
 	@GetMapping("/Client")
-	public ModelAndView listCompte(@RequestParam Integer idClient){
+	public ModelAndView listCompte(@RequestParam Integer idClient) {
 		List<BankAccount> listCompte = new ArrayList<BankAccount>();
 		ModelAndView mav = new ModelAndView("Client");
 		Client client = this.clientBusiness.findById(idClient);
@@ -145,60 +140,64 @@ public class WebController {
 		mav.addObject("client", client);
 		return mav;
 	}
-	
+
 	@GetMapping("/Client{idClient}/Withdrawal{codeError}")
-	public ModelAndView withdrawal(@PathVariable Integer idClient,@PathVariable Integer codeError, @RequestParam Integer idCompte){
+	public ModelAndView withdrawal(@PathVariable Integer idClient, @PathVariable Integer codeError,
+			@RequestParam Integer idCompte) {
 		ModelAndView mav = new ModelAndView("Withdrawal");
 		BankAccount account = this.bankAccountBusiness.findById(idCompte);
 		Client client = this.clientBusiness.findById(idClient);
 		mav.addObject("compte", account);
-		mav.addObject("client",client);
-		mav.addObject("codeError",codeError);
+		mav.addObject("client", client);
+		mav.addObject("codeError", codeError);
 		return mav;
 	}
+
 	@PostMapping("/Client{idClient}/Withdrawal/Cash")
-	public String doCashWithdrawal(@PathVariable Integer idClient,@RequestParam long amount, @RequestParam Integer idCompte){
+	public String doCashWithdrawal(@PathVariable Integer idClient, @RequestParam long amount,
+			@RequestParam Integer idCompte) {
 		BankAccount withdrawAccount = this.bankAccountBusiness.findById(idCompte);
-		if(amount>300) {
-			return "redirect:/Client"+idClient+"/Withdrawal0.html?idCompte="+idCompte;
-		}else if(withdrawAccount.getBalance()<amount) {
-			return "redirect:/Client"+idClient+"/Withdrawal1.html?idCompte="+idCompte;
+		if (amount > 300) {
+			return "redirect:/Client" + idClient + "/Withdrawal0.html?idCompte=" + idCompte;
+		} else if (withdrawAccount.getBalance() < amount) {
+			return "redirect:/Client" + idClient + "/Withdrawal1.html?idCompte=" + idCompte;
 		}
-		withdrawAccount.setBalance(withdrawAccount.getBalance()-amount);
+		withdrawAccount.setBalance(withdrawAccount.getBalance() - amount);
 		this.bankAccountBusiness.update(withdrawAccount);
-		return "redirect:/Client"+idClient+"/Withdrawal3.html?idCompte="+idCompte;
+		return "redirect:/Client" + idClient + "/Withdrawal3.html?idCompte=" + idCompte;
 	}
-	
+
 	@PostMapping("/Client{idClient}/Withdrawal/BankCard")
-	public String doBankCardWithdrawal(@PathVariable Integer idClient,@RequestParam String typeBanqueCard, @RequestParam Integer idCompte){
+	public String doBankCardWithdrawal(@PathVariable Integer idClient, @RequestParam String typeBanqueCard,
+			@RequestParam Integer idCompte) {
 		CurrentAccount withdrawAccount = this.currentAccountBusiness.findById(idCompte);
 		LocalDate today = LocalDate.now();
-		if(withdrawAccount.getBankCard() != null && withdrawAccount.getBankCard().getExpirationDate().isAfter(today)) {
-			return "redirect:/Client"+idClient+"/Withdrawal4.html?idCompte="+idCompte;
-		}else {
-			if(typeBanqueCard.equals("VISA_ELECTRON")) {
+		if (withdrawAccount.getBankCard() != null && withdrawAccount.getBankCard().getExpirationDate().isAfter(today)) {
+			return "redirect:/Client" + idClient + "/Withdrawal4.html?idCompte=" + idCompte;
+		} else {
+			if (typeBanqueCard.equals("VISA_ELECTRON")) {
 				VisaElectronCard cbElectron = new VisaElectronCard();
 				cbElectron.setTypeBankCard(TypeBankCard.VISA_ELECTRON);
 				cbElectron.setCurrentAccount(withdrawAccount);
 				cbElectron.setExpirationDate(today.plusYears(1));
-				cbElectron.setNumBankCard((idCompte+idClient)*3);
+				cbElectron.setNumBankCard((idCompte + idClient) * 3);
 				VisaElectronCardBusiness newCard = new VisaElectronCardBusiness();
 				newCard.create(cbElectron);
-			}else if(typeBanqueCard.equals("VISA_PREMIER")){
+			} else if (typeBanqueCard.equals("VISA_PREMIER")) {
 				VisaPremierCard cbPremier = new VisaPremierCard();
 				cbPremier.setTypeBankCard(TypeBankCard.VISA_PREMIER);
 				cbPremier.setCurrentAccount(withdrawAccount);
 				cbPremier.setExpirationDate(today.plusYears(1));
-				cbPremier.setNumBankCard((idCompte+idClient)*3);
+				cbPremier.setNumBankCard((idCompte + idClient) * 3);
 				VisaPremierCardBusiness newCard = new VisaPremierCardBusiness();
 				newCard.create(cbPremier);
 			}
-			return "redirect:/Client"+idClient+"/Withdrawal5.html?idCompte="+idCompte;
+			return "redirect:/Client" + idClient + "/Withdrawal5.html?idCompte=" + idCompte;
 		}
 	}
-	
+
 	@GetMapping("/Client/MoneyTransfer{codeResponse}")
-	public ModelAndView moneyTransfer(@RequestParam Integer idClient,@PathVariable Integer codeResponse ){
+	public ModelAndView moneyTransfer(@RequestParam Integer idClient, @PathVariable Integer codeResponse) {
 		ModelAndView mav = new ModelAndView("MoneyTransfer");
 		Client client = this.clientBusiness.findById(idClient);
 		List<BankAccount> listAccount = this.bankAccountBusiness.getAllByClient(client);
@@ -207,39 +206,42 @@ public class WebController {
 		mav.addObject("codeResponse", codeResponse);
 		return mav;
 	}
-	
+
 	@PostMapping("/Client/MoneyTransfer{codeError}")
-	public String doMoneyTransfer(@RequestParam Integer idWithdrawAccount, @RequestParam Integer idPayedAccount, @RequestParam Integer amount, @RequestParam Integer idClient) {
+	public String doMoneyTransfer(@RequestParam Integer idWithdrawAccount, @RequestParam Integer idPayedAccount,
+			@RequestParam Integer amount, @RequestParam Integer idClient) {
 		BankAccount withdrawAccount = this.bankAccountBusiness.findById(idWithdrawAccount);
 		BankAccount payedAccount = this.bankAccountBusiness.findById(idPayedAccount);
-		if(withdrawAccount.getId()==payedAccount.getId()) {
-			return "redirect:/Client/MoneyTransfer0.html?idClient="+idClient;
-		}else if(amount>900) {
-			return "redirect:/Client/MoneyTransfer1.html?idClient="+idClient;
-		}else if(withdrawAccount.getBalance()<amount) {
-			return "redirect:/Client/MoneyTransfer-1.html?idClient="+idClient;
-		}else {
-			withdrawAccount.setBalance(withdrawAccount.getBalance()-amount);
-			payedAccount.setBalance(payedAccount.getBalance()+amount);
+		if (withdrawAccount.getId() == payedAccount.getId()) {
+			return "redirect:/Client/MoneyTransfer0.html?idClient=" + idClient;
+		} else if (amount > 900) {
+			return "redirect:/Client/MoneyTransfer1.html?idClient=" + idClient;
+		} else if (withdrawAccount.getBalance() < amount) {
+			return "redirect:/Client/MoneyTransfer-1.html?idClient=" + idClient;
+		} else {
+			withdrawAccount.setBalance(withdrawAccount.getBalance() - amount);
+			payedAccount.setBalance(payedAccount.getBalance() + amount);
 			this.bankAccountBusiness.update(withdrawAccount);
 			this.bankAccountBusiness.update(payedAccount);
-			return "redirect:/Client/MoneyTransfer2.html?idClient="+idClient;
+			return "redirect:/Client/MoneyTransfer2.html?idClient=" + idClient;
 		}
 	}
 
 	@PostMapping("/Client{idClient}/Withdrawal/ChequeBanque")
-	public String RequieredChequeBank(@PathVariable Integer idClient, String requestCheque, @RequestParam Integer idCompte){
-		ChequeBook reqChequeBook = this.chequeBookBusiness.findById(idCompte);
+	public String RequieredChequeBank(@PathVariable Integer idClient, String requestCheque,
+			@RequestParam Integer idCompte) {
+		ChequeBook reqChequeBook = null;
+		reqChequeBook = this.chequeBookBusiness.findById(idCompte);
 		CurrentAccount withdrawAccount = this.currentAccountBusiness.findById(idCompte);
 		LocalDate today = LocalDate.now();
-		if (reqChequeBook != null && today.minusMonths(3).isBefore(reqChequeBook.getReceptionDate())){
-			return "redirect:/Client"+idClient+"/Withdrawal6.html?idCompte="+idCompte;
+		if (reqChequeBook != null && today.minusMonths(3).isBefore(reqChequeBook.getReceptionDate())) {
+			return "redirect:/Client" + idClient + "/Withdrawal6.html?idCompte=" + idCompte;
 		}
 		ChequeBook chequeBook = new ChequeBook();
 		chequeBook.setReceptionDate(today.plusDays(7));
 		chequeBook.setSendDate(today);
-		chequeBook.setCurrentAccount(withdrawAccount);
+		chequeBook.setBankAccount(withdrawAccount);
 		this.chequeBookBusiness.create(chequeBook);
-		return "redirect:/Client"+idClient+"/Withdrawal7.html?idCompte="+idCompte;
+		return "redirect:/Client" + idClient + "/Withdrawal7.html?idCompte=" + idCompte;
 	}
 }

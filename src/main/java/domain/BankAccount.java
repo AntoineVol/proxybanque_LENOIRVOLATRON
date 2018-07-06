@@ -39,12 +39,7 @@ public abstract class BankAccount implements Entity, Serializable{
 	public void setBalance(Long balance) {
 		this.balance = balance;
 	}
-	public ChequeBook getCheckBook() {
-		return chequeBook;
-	}
-	public void setCheckBook(ChequeBook checkBook) {
-		this.chequeBook = checkBook;
-	}
+
 	public Client getClient() {
 		return client;
 	}
@@ -56,6 +51,12 @@ public abstract class BankAccount implements Entity, Serializable{
 	}
 	public void setTypeBankAccount(TypeBankAccount typeBankAccount) {
 		this.typeBankAccount = typeBankAccount;
+	}
+	public ChequeBook getChequeBook() {
+		return chequeBook;
+	}
+	public void setChequeBook(ChequeBook chequeBook) {
+		this.chequeBook = chequeBook;
 	}
 	private Client client;
 	
