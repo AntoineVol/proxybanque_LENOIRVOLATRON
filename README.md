@@ -1,4 +1,4 @@
-# ProxyBanque Version 3                                             								06/07/2018
+# ProxyBanque Version 3                                             					06/07/2018
 Antoine Volatron et Fabien Lenoir
 -----------------------------------------------------------------------------------------------------------------
 
@@ -21,11 +21,11 @@ Le client peut :
 Les diagrammes de classes et sql sont dans le dossier "Util"
 Pour utiliser ProxiBanqueV3 : 
 ** ------ Installer l'application ------ *
-1) déziper dans un dossier le fichier "Proxibanque_V3_AVOFLE.zip"
+1) déziper dans un dossier le fichier "Proxybanque-LENOIRVOLATRON.zip"
 2) ouvrir une console
-3) aller jusqu'au dossier source de proxibanque.
+3) aller jusqu'au dossier source de proxybanque.
 4) taper : mvn clean package 
-6) puis : xcopy /Y /Q target\proxibanque.war S:\apache-tomcat-8.5.31\webapps\proxibanque.war
+6) puis : xcopy /Y /Q target\proxibanque.war S:\apache-tomcat-8.5.31\webapps\proxybanque_LENOIRVOLATRON.war
 
 ** ------ Créer la base de donnée MySQL ------ *
 1) Ouvrir Xampp
@@ -34,7 +34,7 @@ Pour utiliser ProxiBanqueV3 :
 4) Lancer le controle Admin de MySQL sur Xampp
 5) Cliquer sur l'onglet "console" de Xampp
 6) taper : "mysql -u root -p" puis tapez [entrée]
-7) Dans le dossier PB_V2_AVOFLE, ouvrir le dossier Util et ouvrez dans un éditeur texte le fichier "CreationDBProxBanque_V2.sql"
+7) Dans le dossier proxybanque_LENOIRVOLATRON, ouvrir le dossier Util et ouvrez dans un éditeur texte le fichier "initiationBDD.sql"
 8) Copier l'entièreté du fichier
 9) Dans la console, coller le texte copié.
 10) La base de donnée a été crée dans MySQL.
@@ -80,4 +80,5 @@ Ses comptes courant et épargnes.
 		- VIREMENT : 
 		/!\ Vous ne pourrez effectuer de virement si :
 			- le montant du retrait dépasse le solde du compte débiteur 
-			- vous tentez de retirer une somme de 900€ ou plus. 
+			- vous tentez de retirer une somme de 900€ ou plus.
+#END OF FILE 
