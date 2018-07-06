@@ -47,13 +47,12 @@
 			<basic name="numAccount" />
 			<basic name="nameAccount" />
 			<basic name="creationDate" />
-			<basic name="bankCard" />
-			<basic name="chequeBook" />
 			<basic name="client" />
-			
 			<many-to-one name="client">
 				<join-column name="client_id" referenced-column-name="id" />
 			</many-to-one>
+			<one-to-one name="chequeBook" mapped-by="bankAccount"/>
+			<one-to-one name="bankCard" mapped-by="bankAccount"/>
 		</attributes>
 	</entity>
 	<entity class="domain.SavingAccount">
@@ -78,10 +77,9 @@
 			<basic name="typeBankCard"></basic>
 			<basic name="expirationDate" />
 			<basic name="currentAccount" />
-			<many-to-one name="CurrentAccount">
-				<join-column name="currentAccount_id"
-					referenced-column-name="id" />
-			</many-to-one>
+			<one-to-one name="bankAccount">
+				<join-column name="currentAccount_id" referenced-column-name="id"/>
+			</one-to-one>
 		</attributes>
 	</entity>
 	<entity class="domain.VisaPremierCard" />
@@ -97,10 +95,9 @@
 			<basic name="sendDate" />
 			<basic name="receptionDate" />
 			<basic name="currentAccount" />
-			<many-to-one name="CurrentAccount">
-				<join-column name="currentAccount_id"
-					referenced-column-name="id" />
-			</many-to-one>
+			<one-to-one name="bankAccount" >
+				<join-column name="currentAccount_id" referenced-column-name="id"/>
+			</one-to-one>
 		</attributes>
 	</entity>
 </entity-mappings>

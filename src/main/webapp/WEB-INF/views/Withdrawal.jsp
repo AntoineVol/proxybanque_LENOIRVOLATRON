@@ -63,7 +63,7 @@
 			<form method="post" action="${bankCardWithdrawalUrl}">
 				<legend>Effectuer un retrait de carte bancaire</legend>
 				<div class="form-group">
-					<label for="typeBanqueCard">Quel carte bancaire souhiatez
+					<label for="typeBanqueCard">Quel carte bancaire souhaitez
 						vous?</label> <select name="typeBanqueCard" id="typeBanqueCard">
 						<option value="VISA_PREMIER">VISA_PREMIER</option>
 						<option value="VISA_ELECTRON">VISA_ELECTRON</option>
@@ -96,21 +96,19 @@
 			class="container-fluid d-flex justify-content-center align-items-center">
 			<form method="post" action="${chequeBanquelUrl}">
 				<legend>Effectuer un retrait de chèque</legend>
-				<div class="form-group">
-					<label for="withdrawMean">Quel carte bancaire souhaitez
-						vous?</label> <select name="withdrawMean" id="withdrawMean">
-						<option value="VISA_PREMIER">VISA_PREMIER</option>
-						<option value="VISA_ELECTRON">VISA_ELECTRON</option>
-					</select>
-				</div>
+				<input type="hidden" class="form-control" name="requestCheque"
+						id="requestCheque" value="true" required="required" />
 				<div class="form-group">
 					<button type="submit" class="btn btn-success">Valider</button>
 				</div>
-				<c:if test="${codeResponse==-1}">
-					<div class="alert alert-danger" role="alert">Le compte à
-						debiter n'est pas assez approvisionner pour ce montant de virement
-						!</div>
-				</c:if>
+				<c:choose>
+					<c:when test="${codeError==6}">
+						<div class="alert alert-danger" role="alert">Impossible de retirer un nouveau chéquier, votre dernier retrait date de moins de 3 mois</div>
+					</c:when>
+					<c:when test="${codeError==7}">
+						<div class="alert alert-success" role="alert">Nouvelle chéquier retiré !</div>
+					</c:when>
+				</c:choose>
 				<div class="form-group">
 					<input type="hidden" class="form-control" name="idCompte"
 						id="idCompte" value="${compte.id}" required="required" />

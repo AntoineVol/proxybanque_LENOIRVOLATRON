@@ -11,21 +11,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import business.BankAccountBusiness;
+import business.BankCardBusiness;
+import business.ChequeBookBusiness;
 import business.ClientBusiness;
 import business.CurrentAccountBusiness;
 import business.ResearchComponent;
 import business.SavingAccountBusiness;
+import business.VisaElectronCardBusiness;
+import business.VisaPremierCardBusiness;
 import domain.BankAccount;
 import domain.BankCard;
+import domain.ChequeBook;
 import domain.Client;
 import domain.CurrentAccount;
+import domain.TypeBankCard;
 import domain.VisaElectronCard;
 import domain.VisaPremierCard;
 
@@ -62,6 +67,8 @@ public class WebController {
 	SavingAccountBusiness savingAccountBusiness;
 	@Autowired
 	BankAccountBusiness bankAccountBusiness;
+	@Autowired
+	ChequeBookBusiness chequeBookBusiness;
 
 
 	/**
@@ -159,17 +166,26 @@ public class WebController {
 	public String doBankCardWithdrawal(@PathVariable Integer idClient,@RequestParam String typeBanqueCard, @RequestParam Integer idCompte){
 		CurrentAccount withdrawAccount = this.currentAccountBusiness.findById(idCompte);
 		LocalDate today = LocalDate.now();
-		if(withdrawAccount.getBankCard().getExpirationDate().isAfter(today)) {
+		if(withdrawAccount.getBankCard() != null && withdrawAccount.getBankCard().getExpirationDate().isAfter(today)) {
 			return "redirect:/Client"+idClient+"/Withdrawal4.html?idCompte="+idCompte;
 		}else {
-			BankCard cb = null;
 			if(typeBanqueCard.equals("VISA_ELECTRON")) {
-				cb = new VisaElectronCard();
+				VisaElectronCard cbElectron = new VisaElectronCard();
+				cbElectron.setTypeBankCard(TypeBankCard.VISA_ELECTRON);
+				cbElectron.setCurrentAccount(withdrawAccount);
+				cbElectron.setExpirationDate(today.plusYears(1));
+				cbElectron.setNumBankCard((idCompte+idClient)*3);
+				VisaElectronCardBusiness newCard = new VisaElectronCardBusiness();
+				newCard.create(cbElectron);
 			}else if(typeBanqueCard.equals("VISA_PREMIER")){
-				cb = new VisaPremierCard();
+				VisaPremierCard cbPremier = new VisaPremierCard();
+				cbPremier.setTypeBankCard(TypeBankCard.VISA_PREMIER);
+				cbPremier.setCurrentAccount(withdrawAccount);
+				cbPremier.setExpirationDate(today.plusYears(1));
+				cbPremier.setNumBankCard((idCompte+idClient)*3);
+				VisaPremierCardBusiness newCard = new VisaPremierCardBusiness();
+				newCard.create(cbPremier);
 			}
-			cb.setCurrentAccount(withdrawAccount);
-			//Parametrer la nouvelle carte avant de la créer
 			return "redirect:/Client"+idClient+"/Withdrawal5.html?idCompte="+idCompte;
 		}
 	}
@@ -202,5 +218,21 @@ public class WebController {
 			this.bankAccountBusiness.update(payedAccount);
 			return "redirect:/Client/MoneyTransfer2.html?idClient="+idClient;
 		}
+	}
+
+	@PostMapping("/Client{idClient}/Withdrawal/ChequeBanque")
+	public String RequieredChequeBank(@PathVariable Integer idClient, String requestCheque, @RequestParam Integer idCompte){
+		ChequeBook reqChequeBook = this.chequeBookBusiness.findById(idCompte);
+		CurrentAccount withdrawAccount = this.currentAccountBusiness.findById(idCompte);
+		LocalDate today = LocalDate.now();
+		if (reqChequeBook != null && today.minusMonths(3).isBefore(reqChequeBook.getReceptionDate())){
+			return "redirect:/Client"+idClient+"/Withdrawal6.html?idCompte="+idCompte;
+		}
+		ChequeBook chequeBook = new ChequeBook();
+		chequeBook.setReceptionDate(today.plusDays(7));
+		chequeBook.setSendDate(today);
+		chequeBook.setCurrentAccount(withdrawAccount);
+		this.chequeBookBusiness.create(chequeBook);
+		return "redirect:/Client"+idClient+"/Withdrawal7.html?idCompte="+idCompte;
 	}
 }

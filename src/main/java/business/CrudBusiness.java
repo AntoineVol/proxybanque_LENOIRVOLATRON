@@ -22,7 +22,7 @@ public abstract class CrudBusiness<ENTITY extends Entity>{
 		return this.repo.save(entity);
 	}
 	public ENTITY create(ENTITY entity){
-		return this.repo.save(entity);
+		return this.save(entity);
 	}
 	public void delete(Integer id){
 		this.repo.deleteById(id);
