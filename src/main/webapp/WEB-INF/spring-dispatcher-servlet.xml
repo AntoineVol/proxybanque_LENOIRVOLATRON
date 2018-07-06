@@ -25,11 +25,16 @@
 	<bean id="addressService" class="business.AddressBusiness" />
 	<bean id="bankCardService" class="business.BankCardBusiness" />
 	<bean id="currentAccountService" class="business.CurrentAccountBusiness" />
-	<bean id="savingAccountService" class="business.SavingAccountBusiness" />
 	<bean id="visaElectronCardBusiness" class="business.VisaElectronCardBusiness" />
 	<bean id="visaPremierCardBusiness" class="business.VisaPremierCardBusiness" />
+	<bean id="savingAccountService" class="business.SavingAccountBusiness" />
+	<bean id="widthdrawalMethod" class="business.WithdrawalMethod" />
 
 	<!-- Parametrage springframework -->
+	<bean id="researchComponent" class="business.ResearchComponent"
+		scope="prototype" />
+
+
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/views/" />
@@ -46,9 +51,4 @@
 		<property name="entityManagerFactory"
 			ref="entityManagerFactory" />
 	</bean>
-
-	<bean id="researchComponent"
-		class="business.ResearchComponent"
-		scope="prototype" />
-
 </beans>

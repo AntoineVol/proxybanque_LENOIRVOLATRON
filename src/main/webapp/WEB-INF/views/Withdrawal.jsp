@@ -22,6 +22,9 @@
 			class="container-fluid d-flex justify-content-center align-items-center">
 
 			<form method="post" action="${cashWithdrawalUrl}">
+			<c:url value="/Client.html?idClient=${client.id}" var="listeClientsUrl" />
+			<a class="btn btn-warning" href="${listeClientsUrl} "><img id= "fleche"alt="imageFleche" src="${pageContext.request.contextPath}/images/fleche.png"> Retour
+				à la liste des comptes</a>
 				<legend>Effectuer un retrait d'argent</legend>
 				<div class="form-group">
 					<label for="balance">Quel montant souhaitez vous retirer ?</label>
@@ -77,9 +80,7 @@
 				</div>
 				<c:choose>
 					<c:when test="${codeError==4}">
-						<div class="alert alert-danger" role="alert">Impossible de
-							retirer une nouvelle carte banquaire, il y en a déjà une en cours
-							de validité !</div>
+						<div class="alert alert-danger" role="alert">Impossible d’effectuer le retrait, votre ancienne carte est encore valide !</div>
 					</c:when>
 					<c:when test="${codeError==5}">
 						<div class="alert alert-success" role="alert">Nouvelle carte retirée !</div>
@@ -117,7 +118,9 @@
 						id="idCompte" value="${compte.id}" required="required" />
 				</div>
 			</form>
+			
 		</div>
+		
 	</div>
 	<div id=margeHaute></div>
 	<%@ include file="footer.jsp"%>
