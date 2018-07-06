@@ -117,14 +117,7 @@ public class WebController {
 		mav.addObject("clientIdentification", new Client());
 		return mav;
 	}
-	
-	@PostMapping("/Home/Date")
-	public String accessAccount(){
-		
-		return URL_CLIENT + 3;
-	}
 
-	
 	@GetMapping("/Client")
 	public ModelAndView listCompte(@RequestParam Integer idClient){
 		List<BankAccount> listCompte = new ArrayList<BankAccount>();
@@ -136,11 +129,61 @@ public class WebController {
 		return mav;
 	}
 	
-	@GetMapping("/Retrait")
-	public ModelAndView retrait(@RequestParam Integer idCompte ){
-		ModelAndView mav = new ModelAndView("Retrait");
+	@GetMapping("/Client{idClient}/Withdrawal")
+	public ModelAndView withdrawal(@PathVariable Integer idClient, @RequestParam Integer idCompte){
+		ModelAndView mav = new ModelAndView("Withdrawal");
 		BankAccount account = this.bankAccountBusiness.findById(idCompte);
+		Client client = this.clientBusiness.findById(idClient);
 		mav.addObject("compte", account);
+		mav.addObject("client",client);
 		return mav;
+	}
+	@PostMapping("/Client{idClient}/Withdrawal")
+	public ModelAndView doWithdrawal(@PathVariable Integer idClient,@RequestParam double amount, @RequestParam String withdrawMean, @RequestParam Integer idCompte){
+		BankAccount withdrawAccount = this.bankAccountBusiness.findById(idCompte);
+		if(amount>300) {
+			return "redirect:";
+		}else if(amount>900) {
+			return "redirect:";
+		}else if(t) {
+			return "redirect:/Client/MoneyTransfer-1.html?idClient="+idClient;
+		}else {
+			withdrawAccount.setBalance(withdrawAccount.getBalance()-amount);
+			payedAccount.setBalance(payedAccount.getBalance()+amount);
+			this.bankAccountBusiness.update(withdrawAccount);
+			this.bankAccountBusiness.update(payedAccount);
+			return "redirect:/Client/MoneyTransfer2.html?idClient="+idClient;
+		}
+		return null;
+	}
+	
+	@GetMapping("/Client/MoneyTransfer{codeResponse}")
+	public ModelAndView moneyTransfer(@RequestParam Integer idClient,@PathVariable Integer codeResponse ){
+		ModelAndView mav = new ModelAndView("MoneyTransfer");
+		Client client = this.clientBusiness.findById(idClient);
+		List<BankAccount> listAccount = this.bankAccountBusiness.getAllByClient(client);
+		mav.addObject("listAccount", listAccount);
+		mav.addObject("client", client);
+		mav.addObject("codeResponse", codeResponse);
+		return mav;
+	}
+	
+	@PostMapping("/Client/MoneyTransfer{codeError}")
+	public String doMoneyTransfer(@RequestParam Integer idWithdrawAccount, @RequestParam Integer idPayedAccount, @RequestParam Integer amount, @RequestParam Integer idClient) {
+		BankAccount withdrawAccount = this.bankAccountBusiness.findById(idWithdrawAccount);
+		BankAccount payedAccount = this.bankAccountBusiness.findById(idPayedAccount);
+		if(withdrawAccount.getId()==payedAccount.getId()) {
+			return "redirect:/Client/MoneyTransfer0.html?idClient="+idClient;
+		}else if(amount>900) {
+			return "redirect:/Client/MoneyTransfer1.html?idClient="+idClient;
+		}else if(withdrawAccount.getBalance()<amount) {
+			return "redirect:/Client/MoneyTransfer-1.html?idClient="+idClient;
+		}else {
+			withdrawAccount.setBalance(withdrawAccount.getBalance()-amount);
+			payedAccount.setBalance(payedAccount.getBalance()+amount);
+			this.bankAccountBusiness.update(withdrawAccount);
+			this.bankAccountBusiness.update(payedAccount);
+			return "redirect:/Client/MoneyTransfer2.html?idClient="+idClient;
+		}
 	}
 }

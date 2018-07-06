@@ -8,14 +8,14 @@
 	<div id=margeHaute></div>
 
 	<!-- Liste d'URL -->
-	<c:url value="/Retrait.html?idcompte=" var="retraitUrl" />
-	<c:url value="/Virement.html?idcompte=" var="virementsUrl" />
+	<c:url value="/Client${client.id}/Withdrawal.html?idCompte=" var="retraitUrl" />
+	<c:url value="/Client/MoneyTransfer.html?idClient=${client.id}" var="virementsUrl" />
 
 	<div
 		class="container-fluid d-flex justify-content-center align-items-center">
 		<div>
 			<h5>Comptes du Client</h5>
-			
+
 			<table id="liste" class="listCompte">
 				<thead style="font-variant: small-caps;">
 					<tr>
@@ -24,7 +24,6 @@
 						<th>Type de Compte</th>
 						<th>Date de Création</th>
 						<th>Solde du Compte</th>
-						<th></th>
 						<th></th>
 					</tr>
 				</thead>
@@ -37,7 +36,8 @@
 							<td>${bankAccount.creationDate}</td>
 							<td>${bankAccount.balance}</td>
 							<c:choose>
-								<c:when test="${bankAccount.typeBankAccount == 'CURRENT_ACCOUNT'}">
+								<c:when
+									test="${bankAccount.typeBankAccount == 'CURRENT_ACCOUNT'}">
 									<td><a href="${retraitUrl}${bankAccount.id}"
 										class="btn btn-info">Effectuer un retrait</a></td>
 								</c:when>
@@ -45,12 +45,13 @@
 									<td></td>
 								</c:otherwise>
 							</c:choose>
-							<td><a href="${virementsUrl}${bankAccount.id}"
-								class="btn btn-primary">Effectuer un virements</a></td>
 						</tr>
 					</c:forEach>
 				</tbody>
+
 			</table>
+			<a href="${virementsUrl}${bankAccount.id}" class="btn btn-primary">Effectuer
+				un virements</a>
 		</div>
 		<div id=margeHaute></div>
 	</div>

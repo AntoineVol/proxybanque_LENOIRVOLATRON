@@ -14,4 +14,7 @@ public interface BankAccountRepository extends JpaRepository<BankAccount, Intege
 
 	@Transactional
 	public List<BankAccount> getAllByClient(Client client);
+	
+
 }
+

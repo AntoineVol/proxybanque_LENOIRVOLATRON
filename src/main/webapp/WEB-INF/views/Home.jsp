@@ -40,8 +40,7 @@
 						<button type="submit" class="btn btn-success">Valider</button>
 					</div>
 					<c:if test="${codeError==0}">
-						<div class="alert alert-danger" role="alert">La date
-							renseignée n'est pas la bonne !</div>
+						<div class="alert alert-danger" role="alert">Aucun résultat, veuillez vous adresser à un conseiller!</div>
 					</c:if>
 					<c:if test="${codeError==1}">
 						<div class="alert alert-danger" role="alert">Il existe

@@ -11,7 +11,7 @@ public abstract class BankAccount implements Entity, Serializable{
 	private TypeBankAccount typeBankAccount;
 	private Long numAccount;
 	private LocalDate creationDate;
-	private Double balance;
+	private Long balance;
 	private ChequeBook checkBook;
 	
 	//GETTER & SETTER
@@ -33,10 +33,10 @@ public abstract class BankAccount implements Entity, Serializable{
 	public void setCreationDate(LocalDate creationDate) {
 		this.creationDate = creationDate;
 	}
-	public Double getBalance() {
+	public Long getBalance() {
 		return balance;
 	}
-	public void setBalance(Double balance) {
+	public void setBalance(Long balance) {
 		this.balance = balance;
 	}
 	public ChequeBook getCheckBook() {
