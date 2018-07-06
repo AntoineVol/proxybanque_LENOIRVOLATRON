@@ -1,3 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" isELIgnored="false" session="true"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,7 +43,7 @@
 			<font color="${connectionColor}" style="font-variant: small-caps;"><b>${connectionStatus}</b></font>
 		</h5>
 	</div>
-	<!--  Logo déconnection -->
+	<!--  Logo dÃ©connection -->
 	<div class="col-md-1">
 		<div class="navbar-brand">
 			<a href="${homeUrl}"><img name="logo"
@@ -48,5 +52,5 @@
 		</div>
 	</div>
 </nav>
-<!-- Fin entête -->
+<!-- Fin entÃªte -->
 </head>

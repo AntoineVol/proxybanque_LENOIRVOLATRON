@@ -16,4 +16,8 @@ public interface ClientRepository extends JpaRepository<Client, Integer>{
 
 	@Transactional
 	public abstract List<Client> findAllByFirstNameAndLastName(String FirstName, String LastName);
+	@Transactional
+	public abstract List<Client> findAllByFirstName(String FirstName);
+	@Transactional
+	public abstract List<Client> findAllByLastName(String LastName);
 }

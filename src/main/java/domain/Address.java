@@ -10,29 +10,23 @@ import java.io.Serializable;
  */
 public class Address implements Entity, Serializable{
 
-	/**
-<<<<<<< Updated upstream
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	/**
 	 * L'id est un identifiant de base de donnï¿½e gï¿½nï¿½rï¿½ automatiquement
-=======
-	 * L'id est un identifiant de base de donnée généré automatiquement par la BDD
->>>>>>> Stashed changes
 	 */
 	private Integer id;
 	/**
-	 * L'addressLine1 est un champs libre de renseignement d'adresse. Il est conseillé de le remplir avec le n° de voie et la voie de l'adresse.
+	 * L'addressLine1 est un champs libre de renseignement d'adresse. Il est conseillï¿½ de le remplir avec le nï¿½ de voie et la voie de l'adresse.
 	 */
 	private String addressLine1;
 	/**
-	 * L'addressLine1 est un champs libre de renseignement d'adresse. Il est conseillé de le remplir avec des indications supplementaire de l'adresse comme l'étage, la situation de porte sur le palier ...
+	 * L'addressLine1 est un champs libre de renseignement d'adresse. Il est conseillï¿½ de le remplir avec des indications supplementaire de l'adresse comme l'ï¿½tage, la situation de porte sur le palier ...
 	 */
 	private String addressLine2;
 	
 	/**
-	 * Le postalCode contient le code postal. Celui-ci peut être de type Alpha-numerique pour permettre son utilisation à l'international
+	 * Le postalCode contient le code postal. Celui-ci peut ï¿½tre de type Alpha-numerique pour permettre son utilisation ï¿½ l'international
 	 */
 	private String postalCode;
 	/**
@@ -55,21 +49,21 @@ public class Address implements Entity, Serializable{
 	}
 	/**
 	 * Setter de l'id
-	 * @param id Id autogénéré par la BDD
+	 * @param id Id autogï¿½nï¿½rï¿½ par la BDD
 	 */
 	public void setId(Integer id) {
 		this.id = id;
 	}
 	/**
-	 * Getter de la première ligne l'adresse
-	 * @return La première ligne de l'addresse
+	 * Getter de la premiï¿½re ligne l'adresse
+	 * @return La premiï¿½re ligne de l'addresse
 	 */
 	public String getAddressLine1() {
 		return addressLine1;
 	}
 	/**
-	 * Setter de la première ligne de l'adresse
-	 * @param addressLine1 Première ligne de l'adresse
+	 * Setter de la premiï¿½re ligne de l'adresse
+	 * @param addressLine1 Premiï¿½re ligne de l'adresse
 	 */
 	public void setAddressLine1(String addressLine1) {
 		this.addressLine1 = addressLine1;

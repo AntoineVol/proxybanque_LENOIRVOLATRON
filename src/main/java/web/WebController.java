@@ -89,11 +89,18 @@ public class WebController {
 	@PostMapping({ "/Home{idSearch}", "/index" })
 
 	public String searchClient(@RequestParam String name) {
-
+			ResearchComponent researchComponent=null;
 			Integer path;
 			String[] nameArray=name.split(" ");
-			ResearchComponent researchComponent = this.clientBusiness.findAllByFirstNameAndLastName(
-					nameArray[0], nameArray[1]);
+			if(nameArray.length==1) {
+				 researchComponent = this.clientBusiness.findAllByFirstNameAndLastName(
+						nameArray[0], null);
+			}else if(nameArray.length==2){
+				 researchComponent = this.clientBusiness.findAllByFirstNameAndLastName(
+						nameArray[0], nameArray[1]);				
+			}else {
+				return "redirect:/Home-1.html";
+			}
 			
 			if (researchComponent.getListClient().isEmpty() == true) {
 				path=0;

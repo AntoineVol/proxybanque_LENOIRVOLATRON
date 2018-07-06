@@ -3,7 +3,8 @@ package business;
 import domain.Address;
 
 /**
- * @author Volatron et Lenoir
+ * Couche service des adresses
+ * @author Fabien LENOIR & Antoine VOLATRON
  *
  */
 public class AddressBusiness extends CrudBusiness<Address> {

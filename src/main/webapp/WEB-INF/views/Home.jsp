@@ -1,7 +1,10 @@
-<%@ include file="header.jsp"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" isELIgnored="false" session="true"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <c:set var="connectionStatus" value="Disconnected" />
 <c:set var="clientFirstName" value="Client" />
-<c:set var="clientLastName" value="non identifié" />
+<c:set var="clientLastName" value="non identifiÃ©" />
 <c:set var="connectionColor" value="red" />
 <%@ include file="navbar.jsp"%>
 <body>
@@ -10,20 +13,24 @@
 	<div
 		class="container-fluid d-flex justify-content-center align-items-center">
 		<c:choose>
-			<c:when test="${empty idSearch or idSearch==0}">
+			<c:when test="${empty idSearch or idSearch==0 or idSearch==-1}">
 				<form method="post">
 					<legend>Identification</legend>
 					<div class="form-group">
 						<input type="text" class="form-control" name="name" id="name"
 							placeholder="Prenom Nom" required="required" /> <small
-							id="nameHelpInline" class="text-muted"> Les prenom composés doivent être lié par un "-" </small>
+							id="nameHelpInline" class="text-muted"> Les prenom
+							composÃ©s doivent Ãªtre liÃ© par un "-" </small>
 					</div>
 					<div class="form-group">
 						<button type="submit" class="btn btn-success">Valider</button>
 					</div>
 					<c:if test="${idSearch==0}">
 						<div class="alert alert-danger" role="alert">Le prenom ou le
-							nom est erroné !</div>
+							nom est erronÃ© !</div>
+					</c:if>
+					<c:if test="${idSearch==-1}">
+						<div class="alert alert-danger" role="alert">Il ne peut y avoir 3 parties de nom. Pour les nom composÃ©s, utilisÃ© les "-" !</div>
 					</c:if>
 				</form>
 
@@ -40,7 +47,8 @@
 						<button type="submit" class="btn btn-success">Valider</button>
 					</div>
 					<c:if test="${codeError==0}">
-						<div class="alert alert-danger" role="alert">Aucun résultat, veuillez vous adresser à un conseiller!</div>
+						<div class="alert alert-danger" role="alert">Aucun rÃ©sultat,
+							veuillez vous adresser Ã  un conseiller!</div>
 					</c:if>
 					<c:if test="${codeError==1}">
 						<div class="alert alert-danger" role="alert">Il existe

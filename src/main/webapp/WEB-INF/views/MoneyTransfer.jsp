@@ -1,4 +1,7 @@
-<%@ include file="header.jsp"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" isELIgnored="false" session="true"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <c:set var="connectionStatus" value="Connected" />
 <c:set var="clientFirstName" value="${client.firstName}" />
 <c:set var="clientLastName" value="${client.lastName}" />
@@ -13,7 +16,7 @@
 
 		<form method="post">
 			<c:url value="/Client.html?idClient=${client.id}" var="listeClientsUrl" />
-			<a class="btn btn-warning" href="${listeClientsUrl} ">Retour
+			<a class="btn btn-warning" href="${listeClientsUrl} "><img id= "fleche"alt="imageFleche" src="${pageContext.request.contextPath}/images/fleche.png"> Retour
 				à la liste des comptes</a>
 			<legend>Effectuer un virement</legend>
 			<div class="form-group">

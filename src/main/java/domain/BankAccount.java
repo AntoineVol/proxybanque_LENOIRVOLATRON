@@ -12,7 +12,7 @@ public abstract class BankAccount implements Entity, Serializable{
 	private Long numAccount;
 	private LocalDate creationDate;
 	private Long balance;
-	private ChequeBook checkBook;
+	private ChequeBook chequeBook;
 	
 	//GETTER & SETTER
 	public Integer getId() {
@@ -40,10 +40,10 @@ public abstract class BankAccount implements Entity, Serializable{
 		this.balance = balance;
 	}
 	public ChequeBook getCheckBook() {
-		return checkBook;
+		return chequeBook;
 	}
 	public void setCheckBook(ChequeBook checkBook) {
-		this.checkBook = checkBook;
+		this.chequeBook = checkBook;
 	}
 	public Client getClient() {
 		return client;
