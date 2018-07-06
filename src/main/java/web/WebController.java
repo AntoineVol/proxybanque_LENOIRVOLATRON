@@ -164,7 +164,7 @@ public class WebController {
 			@RequestParam Integer idCompte) {
 			return withdrawalMethod.doBankCardWithdrawal(idClient, typeBanqueCard, idCompte);
 	}
-
+	
 	@GetMapping("/Client/MoneyTransfer{codeResponse}")
 	public ModelAndView moneyTransfer(@RequestParam Integer idClient, @PathVariable Integer codeResponse) {
 		ModelAndView mav = new ModelAndView("MoneyTransfer");

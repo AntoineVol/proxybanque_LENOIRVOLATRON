@@ -50,13 +50,11 @@ Au démarrage l'application ProxiBanqueV3 affiche une page où le Nom et le Pré
 Une fois le prénom et/ou le nom validé, une nouvelle page est affichée. Elle demande au client de renseigner 
 une date de naissance afin de sélectionner un client unique.
 
-	- conseiller 1:
-		# login :"admin"			
-		# password "admin"
-	- conseiller 2:
-		# login :"tim"			
-		# password "tim1"
-
+ 	- client test:
+		** Prénom :"Tim" **			
+		** Nom : "Burton" **
+		** date : "1991-12-11" **
+	
 A chaque erreur, une notification spécifique s'affiche.. 
 		
 ** Une fois identifié **
@@ -66,7 +64,7 @@ Ses comptes courant et épargnes.
 
 ** Plusieurs choix s'offrent à vous : ** 
 		
-   	- [effectuer un retrait] : effectuer un retrait
+   	- [effectuer un retrait] : /!\ le bouton ne s'affiche QUE sur un compte courant
 		#  Une fois cliqué une nouvelle page apparait permettant d'effectuer plusieurs sortes de retraits. 
 		- RETRAIT EN LIQUIDE
 			/!\ Vous ne pourrez par retirer une somme strictement inférieur ou égal à 300€.

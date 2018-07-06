@@ -34,11 +34,10 @@ public class WithdrawalMethod {
 		}
 		withdrawAccount.setBalance(withdrawAccount.getBalance() - amount);
 		this.bankAccountBusiness.update(withdrawAccount);
-		return "redirect:/Client" + idClient + "/Withdrawal3.html?idCompte=" + idCompte;
+		return ("redirect:/Client" + idClient + "/Withdrawal3.html?idCompte=" + idCompte).toString();
 	}
 
-	public String doBankCardWithdrawal( Integer idClient,  String typeBanqueCard,
-			 Integer idCompte) {
+	public String doBankCardWithdrawal( Integer idClient,  String typeBanqueCard, Integer idCompte) {
 		int idCard;
 		CurrentAccount withdrawAccount = this.currentAccountBusiness.findById(idCompte);
 		LocalDate today = LocalDate.now();
@@ -64,7 +63,7 @@ public class WithdrawalMethod {
 				withdrawAccount.setBankCard(this.visaPremierCardBusiness.findById(idCard));
 			}
 			this.bankAccountBusiness.update(withdrawAccount);
-			return "redirect:/Client" + idClient + "/Withdrawal5.html?idCompte=" + idCompte;
+			return ("redirect:/Client" + idClient + "/Withdrawal5.html?idCompte=" + idCompte).toString();
 		}
 	}
 	
@@ -82,7 +81,7 @@ public class WithdrawalMethod {
 		chequeBook.setSendDate(today);
 		chequeBook.setBankAccount(withdrawAccount);
 		this.chequeBookBusiness.create(chequeBook);
-		return "redirect:/Client" + idClient + "/Withdrawal7.html?idCompte=" + idCompte;
+		return ("redirect:/Client" + idClient + "/Withdrawal7.html?idCompte=" + idCompte).toString();
 	}
 
 }
