@@ -50,23 +50,21 @@
 
 	<entity class="domain.CurrentAccount">
 		<discriminator-value>CURRENT_ACCOUNT</discriminator-value>
-		<attributes>
-			<one-to-one name="bankCard">
-				<join-column name="bankCard_id"
-					referenced-column-name="id" />
-			</one-to-one>
-		</attributes>
 	</entity>
 
 
 	<entity class="domain.BankAccount">
 		<table name="bankAccount" />
 		<inheritance strategy="SINGLE_TABLE" />
-		<discriminator-column name="TYPE" />
+		<discriminator-column name="type" />
 		<attributes>
 			<id name="id">
 				<generated-value strategy="IDENTITY" />
 			</id>
+			<basic name="type">
+				<column insertable="false" updatable="false" />
+				<enumerated>STRING</enumerated>
+			</basic>
 			<basic name="typeBankAccount" />
 			<basic name="numAccount" />
 			<basic name="nameAccount" />
@@ -79,18 +77,31 @@
 				<join-column name="chequeBook_id"
 					referenced-column-name="id" />
 			</one-to-one>
+			<one-to-one name="currentAccount">
+				<join-column name="currentAccount_id"
+					referenced-column-name="id" />
+			</one-to-one>
+			<one-to-one name="bankCard">
+				<join-column name="bankCard_id"
+					referenced-column-name="id" />
+			</one-to-one>
+
 		</attributes>
 	</entity>
 
 	<entity class="domain.BankCard">
 		<table name="bankCard" />
 		<inheritance strategy="SINGLE_TABLE" />
+		<discriminator-column name="typeBankCard" />
 		<attributes>
 			<id name="id">
 				<generated-value strategy="IDENTITY" />
 			</id>
 			<basic name="numBankCard" />
-			<basic name="typeBankCard"></basic>
+			<basic name="typeBankCard">
+				<column insertable="false" updatable="false" />
+				<enumerated>STRING</enumerated>
+			</basic>
 			<basic name="expirationDate" />
 			<one-to-one name="currentAccount">
 				<join-column name="currentAccount_id"
@@ -98,9 +109,13 @@
 			</one-to-one>
 		</attributes>
 	</entity>
-	<entity class="domain.VisaPremierCard" />
+	<entity class="domain.VisaPremierCard">
+		<discriminator-value>VISA_PREMIER</discriminator-value>
+	</entity>
 
-	<entity class="domain.VisaElectronCard" />
+	<entity class="domain.VisaElectronCard">
+		<discriminator-value>VISA_ELECTRON</discriminator-value>
+	</entity>
 
 	<entity class="domain.ChequeBook">
 		<table name="chequeBook" />

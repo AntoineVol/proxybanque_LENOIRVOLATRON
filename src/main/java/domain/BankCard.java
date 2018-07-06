@@ -19,10 +19,12 @@ public abstract class BankCard implements Entity, Serializable{
 	/**
 	 * TypeBankCard est le type de Carte. Il est défini lors de la création de la carte bancaire
 	 */
-	private TypeBankCard typeBankCard;
+private String typeBankCard;
+
 	/**
 	 * numBankCard est le type de numéro de Carte est défini lors de la carte bancaire
 	 */
+
 	private Integer numBankCard;
 	/**
 	 * expirationDate est la date d'expiration de la carte bancaire 
@@ -81,14 +83,14 @@ public abstract class BankCard implements Entity, Serializable{
 	 * @return typeBankCard le type de carte bancaire
 	 */
 	public TypeBankCard getTypeBankCard() {
-		return typeBankCard;
+		return TypeBankCard.valueOf(this.typeBankCard);
 	}
 	/**
 	 * Setter du type de la carte bancaire
 	 * @param typeBankCard le type de carte bancaire
 	 */
 	public void setTypeBankCard(TypeBankCard typeBankCard) {
-		this.typeBankCard = typeBankCard;
+		this.typeBankCard = typeBankCard.name();
 	}
 	/**
 	 * Getter du compte courant associé

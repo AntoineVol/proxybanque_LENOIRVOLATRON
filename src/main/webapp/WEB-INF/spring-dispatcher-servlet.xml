@@ -26,6 +26,8 @@
 	<bean id="bankCardService" class="business.BankCardBusiness" />
 	<bean id="currentAccountService" class="business.CurrentAccountBusiness" />
 	<bean id="savingAccountService" class="business.SavingAccountBusiness" />
+	<bean id="visaElectronCardBusiness" class="business.VisaElectronCardBusiness" />
+	<bean id="visaPremierCardBusiness" class="business.VisaPremierCardBusiness" />
 
 	<!-- Parametrage springframework -->
 	<bean id="viewResolver"

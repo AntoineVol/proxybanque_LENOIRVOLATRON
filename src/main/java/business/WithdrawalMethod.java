@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import domain.BankAccount;
 
 public class WithdrawalMethod {
-	@
+	
 	
 	public String doCashWithdrawal(Integer idClient, long amount,  Integer idCompte, BankAccountBusiness bankAccountBusiness) {
 		BankAccount withdrawAccount = bankAccountBusiness.findById(idCompte);

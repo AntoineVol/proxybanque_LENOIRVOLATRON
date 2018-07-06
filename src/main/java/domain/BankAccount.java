@@ -18,9 +18,10 @@ public abstract class BankAccount implements Entity, Serializable{
 	 */
 	private Integer id;
 	/**
-	 * TypeBankAccount est le type de Compte. Il est défini lors de la création du compte
+	 * type est le type de Compte. Il est défini lors de la création du compte
 	 */
-	private TypeBankAccount typeBankAccount;
+
+	private String type;
 	/**
 	 * numAccount est le type de numéro de Compte est défini lors de la création du compte
 	 */
@@ -37,6 +38,10 @@ public abstract class BankAccount implements Entity, Serializable{
 	 * chequeBook est le chéquier du compte. 
 	 */
 	private ChequeBook chequeBook;
+	private Client client;
+	private BankCard bankCard;
+
+	
 	
 	//GETTER & SETTER
 
@@ -110,24 +115,12 @@ public abstract class BankAccount implements Entity, Serializable{
 	public void setClient(Client client) {
 		this.client = client;
 	}
-	/**
-	 * Getter du type de compte créé
-	 * @return typeBankAccount le type de compte créé
-	 */
-	public TypeBankAccount getTypeBankAccount() {
-		return typeBankAccount;
-	}
-	/**
-	 * Setter du type de compte
-	 * @param typeBankAccount le type de compte
-	 */
-	public void setTypeBankAccount(TypeBankAccount typeBankAccount) {
-		this.typeBankAccount = typeBankAccount;
-	}
+
 	/**
 	 * Carnet de Cheque du compte
 	 * @return le carnet de chèque
 	 */
+
 	public ChequeBook getChequeBook() {
 		return chequeBook;
 	}
@@ -138,6 +131,19 @@ public abstract class BankAccount implements Entity, Serializable{
 	public void setChequeBook(ChequeBook chequeBook) {
 		this.chequeBook = chequeBook;
 	}
-	private Client client;
+	public TypeBankAccount getType() {
+		return TypeBankAccount.valueOf(this.type);
+	}
+	public void setType(TypeBankAccount type) {
+		this.type = type.name();
+	}
+	public BankCard getBankCard() {
+		return bankCard;
+	}
+	public void setBankCard(BankCard bankCard) {
+		this.bankCard = bankCard;
+	}
+
+
 	
 }

@@ -32,12 +32,12 @@
 						<tr>
 							<td>${bankAccount.id}</td>
 							<td>${bankAccount.numAccount}</td>
-							<td>${bankAccount.typeBankAccount}</td>
+							<td>${bankAccount.type}</td>
 							<td>${bankAccount.creationDate}</td>
 							<td>${bankAccount.balance}</td>
 							<c:choose>
 								<c:when
-									test="${bankAccount.typeBankAccount == 'CURRENT_ACCOUNT'}">
+									test="${bankAccount.type== 'CURRENT_ACCOUNT'}">
 									<td><a href="${retraitUrl}${bankAccount.id}"
 										class="btn btn-info">Effectuer un retrait</a></td>
 								</c:when>

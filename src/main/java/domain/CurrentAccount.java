@@ -10,10 +10,17 @@ import java.io.Serializable;
  */
 public class CurrentAccount extends BankAccount implements Entity, Serializable{
 
+
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
+
+
 	/**
 	 * bankCard est la carte bancaire associé à un client
 	 */
+
 	private BankCard bankCard;
 	
 	//GETTER & SETTER
@@ -31,4 +38,5 @@ public class CurrentAccount extends BankAccount implements Entity, Serializable{
 	public void setBankCard(BankCard bankCard) {
 		this.bankCard = bankCard;
 	}
+
 }

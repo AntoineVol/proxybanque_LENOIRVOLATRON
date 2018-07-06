@@ -29,6 +29,7 @@ import domain.BankCard;
 import domain.ChequeBook;
 import domain.Client;
 import domain.CurrentAccount;
+import domain.TypeBankAccount;
 import domain.TypeBankCard;
 import domain.VisaElectronCard;
 import domain.VisaPremierCard;
@@ -68,6 +69,10 @@ public class WebController {
 	BankAccountBusiness bankAccountBusiness;
 	@Autowired
 	ChequeBookBusiness chequeBookBusiness;
+	@Autowired
+	VisaElectronCardBusiness visaElectronCardBusiness;
+	@Autowired
+	VisaPremierCardBusiness visaPremierCardBusiness;
 
 	/**
 	 * Methode MVC d'accées à l'URL de la page d'acceuil de l'application
@@ -181,16 +186,14 @@ public class WebController {
 				cbElectron.setCurrentAccount(withdrawAccount);
 				cbElectron.setExpirationDate(today.plusYears(1));
 				cbElectron.setNumBankCard((idCompte + idClient) * 3);
-				VisaElectronCardBusiness newCard = new VisaElectronCardBusiness();
-				newCard.create(cbElectron);
+				this.visaElectronCardBusiness.create(cbElectron);
 			} else if (typeBanqueCard.equals("VISA_PREMIER")) {
 				VisaPremierCard cbPremier = new VisaPremierCard();
 				cbPremier.setTypeBankCard(TypeBankCard.VISA_PREMIER);
 				cbPremier.setCurrentAccount(withdrawAccount);
 				cbPremier.setExpirationDate(today.plusYears(1));
 				cbPremier.setNumBankCard((idCompte + idClient) * 3);
-				VisaPremierCardBusiness newCard = new VisaPremierCardBusiness();
-				newCard.create(cbPremier);
+				this.visaPremierCardBusiness.create(cbPremier);
 			}
 			return "redirect:/Client" + idClient + "/Withdrawal5.html?idCompte=" + idCompte;
 		}
